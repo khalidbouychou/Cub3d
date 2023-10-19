@@ -1,25 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map.h                                              :+:      :+:    :+:   */
+/*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/15 14:17:28 by khbouych          #+#    #+#             */
-/*   Updated: 2023/10/15 15:09:28 by khbouych         ###   ########.fr       */
+/*   Created: 2023/10/15 14:00:36 by khbouych          #+#    #+#             */
+/*   Updated: 2023/10/18 19:24:54 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAP_H
-# define MAP_H
+#include "../headers/cub.h"
 
-// # include "../headers/cub.h"
-#include "headers/get_next_line.h"
-typedef struct	s_map
-{
-    int			width;
-    int			height;
-    char		**map;
-}				t_map;
+// int check_f_e_line(char *fline)
+// {
+//     int i;
 
-#endif
+//     i = 0;
+//     while (i < ft_strlen(fline))
+//     {
+//         if (fline[i] != '1' && fline[i] != ' ')
+//             return (0);
+//         i++;
+//     }
+//     return (1);
+// }
+// void read_map()
+// {
+//     int fd;
+    
+//     fd = open("maps/map.cub", O_RDONLY);
+//     printf("read map\n",get_next_line(fd));
+// }

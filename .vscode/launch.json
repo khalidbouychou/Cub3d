@@ -6,8 +6,8 @@
       "type": "lldb",
       "request": "launch",
       "args": [],
-      "cwd": "/Users/khbouych/Desktop/Cub3d",
-      "program": "/Users/khbouych/Desktop/Cub3d/build/Debug/outDebug"
+      "cwd": "/Users/khbouych/Desktop/Cub3d/src",
+      "program": "/Users/khbouych/Desktop/Cub3d/src/build/Debug/outDebug"
     }
   ],
   "workbench.editor.pinnedTabOnSeparateRow": true
