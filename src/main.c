@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 15:10:03 by khbouych          #+#    #+#             */
-/*   Updated: 2023/10/19 23:49:08 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/10/20 20:22:30 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,21 +116,60 @@ int count_vergules(char *rgb)
     int count;
 
     i = 0;
+    count = 0;
     while (rgb[i])
         if (rgb[i++] == ',')
             count++;
     return (count);
 }
-// int parse_rgb(char **ture2d)
-// {
-//     int i;
 
-//     i = 0;
-//     while (ture2d[i])
-//     {
-        
-//     }
-// }
+int	ft_isdigit(int c)
+{
+	return (c >= '0' && c <= '9');
+}
+
+int check_pos_ofv(char*line)
+{
+    int i;
+    
+    i = 0;
+    while (*line == ' ' || (*line >= 9 && *line <= 13) || *line == 'C' || *line == 'F')
+        line++;
+    if (!ft_isdigit(line[i]) || !ft_isdigit(line[(ft_strlen(line) - 1)]))
+    {
+        puts("ERROR: Invalid");
+        return (0);
+    }
+    while (line[i])
+    {
+        if ((!ft_isdigit(line[i]) && line[i] != ',' )|| (line[i] == ',' && line[i+1] && line[i+1] == ','))
+        {
+            puts("ERROR: I1nvalid");
+            return (0);
+        }
+        i++;
+    }
+    return (1);
+}
+int parse_rgb(char **ture2d)
+{
+    int i;
+
+    i = 0;
+    while (ture2d[i])
+    {
+        if (ture2d[i][0] == 'F' || ture2d[i][0] == 'C')
+        {
+            if (count_vergules(ture2d[i]) != 2 || !check_pos_ofv(ture2d[i]))
+            {
+                write(1, "Error\ninvalid rgb color", 24);
+                return (0);
+            }
+        }
+            i++;
+    }
+    return (1);
+}
 int main(int ac, char **av)
 {
     (void) av;
@@ -142,8 +181,11 @@ int main(int ac, char **av)
     //     return (write(1, "To many Args\n", 13));
     read_textures("map.cub", &m, &count);
     read_map("map.cub", &m);
-    if (checktures_space_tab(m.ture2d , count) == 0)
-        return (write(1, "Error\n", 6));
+    if (!checktures_space_tab(m.ture2d , count) || !parse_rgb(m.ture2d))
+    {
+        write(1, "Error\n", 6);
+        return (0);
+    }
     else
         return (write(1, "OK\n", 3));
     return (0);
