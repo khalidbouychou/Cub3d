@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 14:00:46 by khbouych          #+#    #+#             */
-/*   Updated: 2023/10/19 17:29:34 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/10/21 18:27:22 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ typedef struct s_txtr
 } t_txtr;
 
 char	*ft_strdup(char *s1);
-char	**ft_split(char const *s, char c);
+char	**ft_split(char  *s, char c);
+char	*ft_strtrim(char  *s1, char  *set);
+char	*ft_substr(char  *s, unsigned int start, unsigned len);
 #endif
 

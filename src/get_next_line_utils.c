@@ -6,13 +6,13 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/05 13:56:12 by khbouych          #+#    #+#             */
-/*   Updated: 2023/10/18 19:24:54 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/10/21 17:18:02 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/cub.h"
 
-int	ft_strncmp(const char *str1, const char *str2, size_t n)
+int	ft_strncmp(const char *str1, const char *str2, unsigned int n)
 {
 	while (*str1 && *str1 == *str2 && n)
 	{
@@ -37,7 +37,7 @@ int	ft_strlen(char *str)
 
 char	*ft_strchr(char *src, int c)
 {
-	size_t	i;
+	unsigned int	i;
 
 	i = 0;
 	if (src == NULL)
@@ -55,8 +55,8 @@ char	*ft_strchr(char *src, int c)
 
 char	*ft_strjoin(char *s1, char *s2)
 {
-	size_t	i;
-	size_t	j;
+	unsigned int	i;
+	unsigned int	j;
 	char	*str;
 
 	i = 0;

@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/05 13:53:19 by khbouych          #+#    #+#             */
-/*   Updated: 2023/10/18 19:24:54 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/10/21 17:17:49 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static char	*ft_save_rest_of_line(char *save)
 
 static char	*ft_read_line_from_stash(char *stash)
 {
-	size_t	i;
+	unsigned int	i;
 	char	*line;
 
 	if (stash == NULL)

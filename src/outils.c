@@ -6,17 +6,17 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 17:38:41 by khbouych          #+#    #+#             */
-/*   Updated: 2023/10/18 19:24:54 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/10/21 17:17:57 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/cub.h"
 
-void	*ft_memcpy(void *dest, const void *src, size_t n)
+void	*ft_memcpy(void *dest, const void *src, unsigned int n)
 {
 	char	*p_dest;
 	char	*p_src;
-	size_t	i;
+	unsigned int	i;
 
 	if (dest == NULL && src == NULL)
 		return (0);
@@ -31,7 +31,7 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 char	*ft_strdup(char *s1)
 {
 	char	*tmp;
-	size_t	size;
+	unsigned int	size;
 
 	size = ft_strlen(s1);
 	tmp = (char *)malloc(size + 1);
@@ -41,5 +41,4 @@ char	*ft_strdup(char *s1)
 	tmp[size] = '\0';
 	return (tmp);
 }
-
 

@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:32:07 by khbouych          #+#    #+#             */
-/*   Updated: 2023/10/18 19:24:54 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/10/21 17:19:38 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static char	**ft_fill_words(char const *s, char c, int count_words,
 	return (output);
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_split(char  *s, char c)
 {
 	char	**output;
 
