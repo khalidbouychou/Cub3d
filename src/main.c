@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 15:10:03 by khbouych          #+#    #+#             */
-/*   Updated: 2023/10/23 17:22:15 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/10/23 19:42:24 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void    read_map_(t_map *m)
         if (!if_validmap(m->line) || !if_surrounded(m->line))
         {
             write(1, "Error\ninvalid map\n", 19);
+            free(m->map);
             exit(1);
         }
         m->map = ft_strjoin(m->map, m->line);
@@ -102,10 +103,12 @@ void  read_map(char *av ,t_map *m , int *count)
     if (*count < 6 || *count > 6)
     {
         write(1, "Error\ninvalid map element [texture/color]\n", 41);
+        free(m->ture);
+        free(m->line);
         exit(1);
     }
-    read_map_(m);
     m->ture2d = ft_split(m->ture, '\n');
+    read_map_(m);
     free(m->ture);
     free(m->line);
     close(m->fd);
@@ -270,36 +273,95 @@ t_txtr  *lst_back_ture(t_txtr *l_ture, t_txtr *new)
     tmp->next = new;
     return (l_ture);
 }
-void    lst_ture(t_map *m, t_txtr *l_ture)
+void    lst_ture(t_map *m, t_txtr **l_ture)
 {
     int i;
     t_txtr *tmp;
     i = 0;
-    l_ture = NULL;
+    (*l_ture) = NULL;
     while (m->ture2d[i])
     {
         tmp = new_texture(m->ture2d[i++]);
-        l_ture = lst_back_ture(l_ture, tmp);
+        (*l_ture) = lst_back_ture((*l_ture), tmp);
     }
 }
+void free_2dmap(t_map *m)
+{
+    int i;
+
+    i = 0;
+    while (m->map2d[i])
+        free(m->map2d[i++]);
+    free(m->map2d);
+}
+
+void free_ture2d(t_map *m)
+{
+    int i;
+
+    i = 0;
+    while (m->ture2d[i])
+        free(m->ture2d[i++]);
+    free(m->ture2d);
+}
+
+void free_list(t_txtr *l_ture)
+{
+    t_txtr *tmp;
+
+    while (l_ture)
+    {
+        tmp = l_ture;
+        l_ture = l_ture->next;
+        free(tmp->key);
+        free(tmp->value);
+        free(tmp);
+    }
+    free(tmp);
+}
 //--------------------------------------------------------------------------
+
+void check_rgb(t_txtr *l_ture)
+{
+   t_txtr *tmp;
+
+   tmp = l_ture;
+    while (tmp)
+    {
+        if (!ft_strncmp(tmp->key, "F",1) || !ft_strncmp(tmp->key,"C",1))
+            printf("%s%s\n", tmp->key, tmp->value);
+        tmp = tmp->next;
+    }
+}
+
+void leak(void)
+{
+    system("leaks cub3D");
+}
 int main(int ac, char **av)
 {
+    // atexit(leak);
     (void) av;
     (void) ac;
     t_map m;
-    // t_txtr l_ture;
+    t_txtr *l_ture;
     int count;
+    
+    l_ture = malloc(sizeof(t_txtr));
     count = 0;
     // if (ac != 2)
     //     return (write(1, "To many Args\n", 13));
     read_map("map.cub", &m, &count);
-    // if (!checktures_space_tab(m.ture2d , count) || !parse_rgb(m.ture2d) || !check_duplicat(&m))
-    //     return (0);
+    if (!checktures_space_tab(m.ture2d , count) || !parse_rgb(m.ture2d) || !check_duplicat(&m))
+        return (0);
     // else
     // {
-    //     // lst_ture(&m,&l_ture);
+    lst_ture(&m,&l_ture);
+    check_rgb(l_ture);
     //     return (write(1, "OK\n", 3));
     // }
+    // free_2dmap(&m);
+    // free_ture2d(&m);
+    // free_list(l_ture);
     return (0);
 }
