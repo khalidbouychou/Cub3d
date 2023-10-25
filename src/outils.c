@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 17:38:41 by khbouych          #+#    #+#             */
-/*   Updated: 2023/10/21 17:17:57 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/10/25 19:50:35 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,3 +42,7 @@ char	*ft_strdup(char *s1)
 	return (tmp);
 }
 
+int ft_isdigit(int c)
+{
+	return (c >= '0' && c <= '9');
+}

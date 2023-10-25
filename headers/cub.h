@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 14:00:46 by khbouych          #+#    #+#             */
-/*   Updated: 2023/10/21 18:27:22 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/10/25 20:01:54 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,12 @@ char	*ft_strdup(char *s1);
 char	**ft_split(char  *s, char c);
 char	*ft_strtrim(char  *s1, char  *set);
 char	*ft_substr(char  *s, unsigned int start, unsigned len);
+int ft_isdigit(int c);
+//----------parse textures----------------
+int checktures_space_tab(char **ture2d, int count);
+int parse_rgb(char **ture2d);
+void    lst_ture(t_map *m, t_txtr **l_ture);
+//----------parse map----------------
+void  read_map(char *av ,t_map *m , int *count);
 #endif
 
