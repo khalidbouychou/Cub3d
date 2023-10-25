@@ -46,10 +46,18 @@ int checktures_space_tab(char **ture2d, int count)
 int check_pos_ofv(char*line)
 {
     int i;
+    int  flag;
 
+    flag = 0;
     i = 0;
     while (*line == ' ' || (*line >= 9 && *line <= 13) || *line == 'C' || *line == 'F')
+    {
+        if (*line == 'C' || *line == 'F')
+            flag++;
         line++;
+    }
+    if (flag != 1)
+        return (0);
     if (!ft_isdigit(line[i]) || !ft_isdigit(line[(ft_strlen(line) - 1)]))
         return (0);
     while (line[i])
