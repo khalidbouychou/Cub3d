@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 15:10:03 by khbouych          #+#    #+#             */
-/*   Updated: 2023/10/23 19:42:24 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/10/25 19:46:24 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ int if_surrounded(char *line)
 {
     while (*line == 32 || (*line >= 9 && *line <= 13))
         line++;
-    if (line[0] == '1' && line [ft_strlen(line) - 2] == '1' )
-        return 1;
-    return 0;
+    if (*line != '1' || line[ft_strlen(line) - 2] != '1')
+        return 0;
+    return 1;
 }
 int check_color_textures(char *line)
 {
@@ -71,7 +71,7 @@ void    read_map_(t_map *m)
     m->map = ft_strdup("");
     while (m->line)
     {
-        if (!if_validmap(m->line) || !if_surrounded(m->line))
+        if ( !if_validmap(m->line) || !if_surrounded(m->line)  )
         {
             write(1, "Error\ninvalid map\n", 19);
             free(m->map);
@@ -90,7 +90,7 @@ void  read_map(char *av ,t_map *m , int *count)
     m->fd = open(av, O_RDONLY);
     m->line = get_next_line(m->fd);
     m->ture = ft_strdup("");
-    while (m->line && m->line[0] != '1')
+    while (m->line && m->line[0] != '1' && m->line[0] != 32)
     {
         if (check_color_textures(m->line))
         {
@@ -356,8 +356,8 @@ int main(int ac, char **av)
         return (0);
     // else
     // {
-    lst_ture(&m,&l_ture);
-    check_rgb(l_ture);
+    // lst_ture(&m,&l_ture);
+    // check_rgb(l_ture);
     //     return (write(1, "OK\n", 3));
     // }
     // free_2dmap(&m);
