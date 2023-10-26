@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 19:57:29 by khbouych          #+#    #+#             */
-/*   Updated: 2023/10/25 22:07:59 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/10/26 22:30:44 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,23 @@ int if_surrounded(char *line)
         return 0;
     return 1;
 }
-int if_validmap(char *line)
+int if_validmap(char *line ,int  *flag)
 {
     int i;
 
+    (void)flag;
     i = 0;
     while (line[i])
     {
-        if (line[i] != '1' && line[i] != 32 && line[i] != '0' &&
-            line[i] != 'W' && line[i] != 'E' && line[i] != 'N' &&
-                line[i] != 'S' && line[i] != '\n')
+        if ((line[i] != '1' && line[i] != 32 && line[i] != '0' &&
+        line[i] != '\n') && !(line[i] == 'W' || line[i] == 'E' || line[i] == 'N' ||
+                line[i] == 'S'))
             return (0);
+        else if (line[i] == 'W' || line[i] == 'E' || line[i] == 'N' ||
+                line[i] == 'S')
+        {
+            (*flag)++;
+        }
         i++;
     }
     return (1);
@@ -39,16 +45,23 @@ int if_validmap(char *line)
 int suroundedbyone(char **map)
 {
     int i;
+    int flag;
 
+    flag = 0;
     i = 0;
     while (map[i])
     {
-        if (!if_surrounded(map[i]) || !if_validmap(map[i]))
+        if (!if_surrounded(map[i]) || !if_validmap(map[i], &flag) || flag > 1)
         {
             write(1, "Error\ninvalid map\n", 19);
             return (0);
         }
         i++;
+    }
+    if (flag == 0)
+    {
+        write(1, "Error\nMissing charachters of the map\n", 37);
+        return (0);
     }
     return (1);
 }
@@ -63,7 +76,36 @@ int check_color_textures(char *line)
     return (0);
 }
 
+int check_l_surroundedbyone(char *line)
+{
+    int i;
 
+    i = -1;
+    while (line[++i])
+        if (line[i] != '1' && line[i] != 32)
+            return (0);
+    return (1);
+}
+char  *getlastline(char **map)
+{
+    int i;
+
+    i = 0;
+    while (map[i])
+        i++;
+    return (map[i - 1]);
+}
+
+int check_first_last_line(char **map)
+{
+    if (!check_l_surroundedbyone(map[0]) ||
+        !check_l_surroundedbyone(getlastline(map)))
+        {
+            write(1, "Error\n(first/last) line not surrounded by 1 \n", 46);
+            return (0);
+        }
+    return (1);
+}
 void    read_map_(t_map *m , int count)
 {
     m->map = ft_strdup("");
@@ -71,7 +113,7 @@ void    read_map_(t_map *m , int count)
     {
         if (m->line[0] == '\n')
         {
-            write(1, "Error\ninvalid map\n", 19);
+            write(1, "Error\nempty ligne in the map\n", 29);
             free(m->map);
             return ;
         }
@@ -84,7 +126,7 @@ void    read_map_(t_map *m , int count)
     free(m->line);
     if (!checktures_space_tab(m->ture2d , count) ||
         !parse_rgb(m->ture2d) || !check_duplicat(m) ||
-        !suroundedbyone(m->map2d))
+        !check_first_last_line(m->map2d) || !suroundedbyone(m->map2d))
         return ;
 }
 
@@ -98,6 +140,7 @@ void check_countture(t_map *m , int count)
         return ;
     }
 }
+
 void  read_map(char *av ,t_map *m , int *count)
 {
     m->fd = open(av, O_RDONLY);
