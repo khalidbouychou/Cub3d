@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 14:00:46 by khbouych          #+#    #+#             */
-/*   Updated: 2023/10/25 20:34:41 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/10/27 16:09:02 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct s_map
     char *map;
     char **map2d;
     char **ture2d;
+    char **sq_map;
 }              t_map;
 
 typedef struct s_txtr

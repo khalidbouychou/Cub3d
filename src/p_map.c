@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 19:57:29 by khbouych          #+#    #+#             */
-/*   Updated: 2023/10/26 22:30:44 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/10/27 16:05:49 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ int check_first_last_line(char **map)
         }
     return (1);
 }
+
 void    read_map_(t_map *m , int count)
 {
     m->map = ft_strdup("");
