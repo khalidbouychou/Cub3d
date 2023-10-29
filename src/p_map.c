@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 19:57:29 by khbouych          #+#    #+#             */
-/*   Updated: 2023/10/27 16:05:49 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/10/29 14:51:57 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ void    read_map_(t_map *m , int count)
         {
             write(1, "Error\nempty ligne in the map\n", 29);
             free(m->map);
-            return ;
+            exit(0);
         }
         m->map = ft_strjoin(m->map, m->line);
         free(m->line);
@@ -128,7 +128,7 @@ void    read_map_(t_map *m , int count)
     if (!checktures_space_tab(m->ture2d , count) ||
         !parse_rgb(m->ture2d) || !check_duplicat(m) ||
         !check_first_last_line(m->map2d) || !suroundedbyone(m->map2d))
-        return ;
+            exit(0);
 }
 
 void check_countture(t_map *m , int count)

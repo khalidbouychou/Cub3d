@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 15:10:03 by khbouych          #+#    #+#             */
-/*   Updated: 2023/10/27 16:24:37 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/10/29 18:26:14 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,59 @@ char *fixline(char *line, int maxlen)
     return (new);
 }
 
+
+
+int h_map(char **map)
+{
+    int i;
+    int j;
+
+    i = 0;
+    while (map[i])
+    {
+        j = 0;
+        while (map[i][j])
+        {
+            if (map[i][j] != '1' && map[i][j] != ' ')
+            {
+                if (map[i][j - 1] == ' ' || map[i][j + 1] == ' ')
+                {
+                    write(1, "Error\ninvalid map (h)\n", 23);
+                    return (0);
+                }
+            }
+            j++;
+        }
+        i++;
+    }
+    return 1;
+}
+
+int v_map(char **map)
+{
+    int i;
+    int j;
+
+    i = 0;
+    while (map[i])
+    {
+        j = 0;
+        while (map[i][j])
+        {
+            if (map[i][j] != '1' && map[i][j] != ' ')
+            {
+                if (map[i - 1][j] == ' ' || map[i + 1][j] == ' ')
+                {
+                    write(1, "Error\ninvalid map (v)\n", 23);
+                    return (0);
+                }
+            }
+            j++;
+        }
+        i++;
+    }
+    return 1;
+}
 void    valid_map(t_map *m)
 {
     int i;
@@ -72,14 +125,39 @@ void    valid_map(t_map *m)
         i++;
     }
     m->sq_map[i] = NULL;
+    if (!h_map(m->sq_map) || !v_map(m->sq_map))
+        return ;
+}
+
+void _rgb(char *rgb)
+{
+    char **rgb2d;
+    int i;
+
     i = 0;
-    while (m->sq_map[i])
+    rgb2d = ft_split(rgb, ',');
+    while (rgb2d[i])
     {
-        printf("%d\n", ft_strlen(m->sq_map[i]));
+        if (ft_atoi(rgb2d[i]) < 0 || ft_atoi(rgb2d[i]) > 255)
+        {
+            write (1, "Error\ninvalid rgb color\n", 25);
+            exit(0);
+        }
         i++;
     }
 }
+void parse_rgb_color(t_txtr *ture)
+{
+    t_txtr *tmp;
 
+    tmp = ture;
+    while (tmp)
+    {
+        if (!ft_strncmp(tmp->key, "F", 1) || !ft_strncmp(tmp->key, "C", 1))
+            _rgb(tmp->value);
+        tmp = tmp->next;
+    }
+}
 int main(int ac, char **av)
 {
     (void) av;
@@ -94,5 +172,7 @@ int main(int ac, char **av)
     //     return (write(1, "To many Args\n", 13));
     read_map("map.cub", &m, &count);
     valid_map(&m);
+    lst_ture(&m, &l_ture);
+    parse_rgb_color(l_ture);
     return (0);
 }
