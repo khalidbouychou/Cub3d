@@ -6,7 +6,7 @@
 #    By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/14 18:28:45 by khbouych          #+#    #+#              #
-#    Updated: 2023/10/30 15:43:39 by khbouych         ###   ########.fr        #
+#    Updated: 2023/11/01 23:03:41 by khbouych         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,18 +38,24 @@ SRC= src/free.c \
 OBJ= $(SRC:.c=.o)
 
 all: $(NAME)
+	@echo "\033[0;32m[------ Compilation done -------]\033[0m"
 
 $(NAME): $(OBJ)
-	$(FLAGS) $(FLAG_MLX) $(OBJ) $(MLX) $(LIB) $(INCLUDE) -o $(NAME)
+	@echo "\033[0;32m[------ Compiling -----] $(NAME)\033[0m"
+	@$(FLAGS) $(FLAG_MLX) $(OBJ) $(MLX) $(LIB) $(INCLUDE) -o $(NAME)
 
 %.o: %.c $(HEADERS)
-	$(FLAGS) $(INCLUDE) -c $< -o $@
+	@echo "\033[0;32m[------ Compiling -----] $(NAME) File \033[0m"
+	@$(FLAGS) $(INCLUDE) -c $< -o $@
 
 clean:
-	rm -fr $(OBJ)
+	@echo "\033[0;31m[------ Cleaning -----] $(OBJ)\033[0m"
+	@rm -fr $(OBJ)
 
 fclean:
-	rm -fr $(OBJ) $(NAME)
+	@echo "\033[0;31m[---- Cleaning -----] $(NAME) $(OBJ)\033[0m"
+	@echo "\033[0;31m[---- Cleaning -----] $(OBJ)\033[0m"
+	@rm -fr $(OBJ) $(NAME)
 
 re : fclean all
 .PHONE: all clean fclean re

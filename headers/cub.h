@@ -6,29 +6,18 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 14:00:46 by khbouych          #+#    #+#             */
-/*   Updated: 2023/10/31 18:09:15 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/01 20:16:30 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB_H
 # define CUB_H
 
+#include <math.h>
 #include "get_next_line.h"
 #include "../MLX42/include/MLX42/MLX42.h"
 #define P_SIZE 32
 //****************************************
-
-typedef struct s_mlx
-{
-    mlx_t *mlx;
-    mlx_image_t *img;
-    int x;
-    int y;
-    int i;
-    int j;
-    int color;
-}              t_mlx;
-
 typedef struct s_map
 {
     int fd;
@@ -41,7 +30,27 @@ typedef struct s_map
     char **sq_map;
     int h_map;
     int w_map;
+    int turndirection;
+    int walkdirection;
+    float rotatangle;
+    float movespeed;
+    float rotatespeed;
 }              t_map;
+
+typedef struct s_mlx
+{
+    mlx_t *mlx;
+    mlx_image_t *img;
+    float x;
+    float y;
+    int i;
+    int j;
+    int color;
+    int xplayer;
+    int yplayer;
+    t_map *m;
+}              t_mlx;
+
 
 typedef struct s_txtr
 {
@@ -74,6 +83,9 @@ int     check_ifvalid(char *line);
 char    *removeSpaces(char* str);
 //-----------mlx----------------
 void draw(t_mlx *smlx, t_map *m , t_txtr *l_ture);
+void key(mlx_key_data_t keydata , void *param);
+void    draw2d(t_map *m, t_mlx *smlx);
+void    draw_player(t_mlx *smlx);
 //-----------map----------------
 #endif
 

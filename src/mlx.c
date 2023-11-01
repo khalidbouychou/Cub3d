@@ -6,34 +6,24 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:38:38 by khbouych          #+#    #+#             */
-/*   Updated: 2023/10/31 18:45:32 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/01 23:14:21 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/cub.h"
 
-void    draw_square(mlx_image_t *img, t_mlx **smlx , char p , int color)
+void    draw_square(mlx_image_t *img, t_mlx **smlx , int color)
 {
     t_mlx *tmp;
-    int t;
 
     tmp = *smlx;
     tmp->x = -1;
 
-    if ((p == 'N' || p == 'S' || p == 'W' || p == 'E'))
-        t = 8;
-    else
-        t = P_SIZE;
-    while (++tmp->x < t)
+    while (++tmp->x < P_SIZE)
     {
         tmp->y = -1;
-        while (++tmp->y < t)
-        {
-            if (p == 'N' || p == 'S' || p == 'W' || p == 'E')
-                mlx_put_pixel(img,(tmp->j * P_SIZE) + tmp->x ,(tmp->i * P_SIZE) + tmp->y, color);
-            else
-                mlx_put_pixel(img,(tmp->j * P_SIZE) + tmp->x ,(tmp->i * P_SIZE) + tmp->y, color);
-        }
+        while (++tmp->y < P_SIZE)
+            mlx_put_pixel(img,(tmp->j * P_SIZE) + tmp->x ,(tmp->i * P_SIZE) + tmp->y, color);
     }
 }
 
@@ -41,7 +31,7 @@ void    draw2d(t_map *m, t_mlx *smlx)
 {
     smlx->i = 0;
     smlx->color = 0;
-    smlx->img = mlx_new_image(smlx->mlx,(m->w_map * P_SIZE),(m->h_map * P_SIZE));
+    smlx->img = mlx_new_image(smlx->mlx,(smlx->m->w_map * P_SIZE),(smlx->m->h_map * P_SIZE));
     if (!smlx->img)
     {
         printf("error\n");
@@ -53,28 +43,62 @@ void    draw2d(t_map *m, t_mlx *smlx)
         while (m->sq_map[smlx->i][smlx->j])
         {
             if (m->sq_map[smlx->i][smlx->j] == '1')
-                draw_square(smlx->img,&smlx,'1',0x00FFFFFF);
-            else if (m->sq_map[smlx->i][smlx->j] == 'W' || m->sq_map[smlx->i][smlx->j] == 'E' ||
-                m->sq_map[smlx->i][smlx->j] == 'N' || m->sq_map[smlx->i][smlx->j] == 'S')
-                draw_square(smlx->img,&smlx, m->sq_map[smlx->i][smlx->j], 0xFF0000FF);
+                draw_square(smlx->img,&smlx,0x00FFFFFF);
             else
-                draw_square(smlx->img,&smlx, m->sq_map[smlx->i][smlx->j], 0x00000000);
+                draw_square(smlx->img,&smlx, 0x00000000);
             smlx->j++;
         }
         smlx->i++;
     }
     mlx_image_to_window(smlx->mlx,smlx->img,0,0);
 }
+
+void    draw_player(t_mlx *smlx)
+{
+    smlx->i = -1;
+    while (++smlx->i < 5)
+    {
+        smlx->j = -1;
+        while (++smlx->j < 5)
+            mlx_put_pixel(smlx->img,(smlx->xplayer * P_SIZE) + smlx->i ,(smlx->yplayer * P_SIZE) + smlx->j, 0xFF0000FF);
+    }
+}
 void draw(t_mlx *smlx, t_map *m , t_txtr *l_ture)
 {
     (void)l_ture;
-    smlx->mlx = mlx_init((m->w_map * P_SIZE),(m->h_map * P_SIZE),"cub3d",true);
+    smlx->mlx = mlx_init((m->w_map * P_SIZE),(m->h_map * P_SIZE),"cub3d",false);
     if (!smlx->mlx)
     {
         printf("%s",mlx_strerror(mlx_errno));
         exit(EXIT_FAILURE);
     }
     draw2d(m,smlx);
-    mlx_loop(smlx->mlx);
-    mlx_terminate(smlx->mlx);
+    draw_player(smlx);
+}
+
+void key(mlx_key_data_t keydata , void *param)
+{
+
+    t_map *m;
+    m = param;
+    if (keydata.key == MLX_KEY_ESCAPE && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
+        exit(0);
+    // else if (keydata.key == MLX_KEY_LEFT && (keydata.action == MLX_PRESS))
+    //     m->turndirection = -1;
+    // else if (keydata.key == MLX_KEY_RIGHT && (keydata.action == MLX_PRESS))
+    //     m->turndirection = 1;
+    else if (keydata.key == MLX_KEY_DOWN && (keydata.action == MLX_PRESS))
+        m->walkdirection = -1;
+    else if (keydata.key == MLX_KEY_UP && keydata.action == MLX_PRESS)
+        m->walkdirection = 1;
+
+    // if (keydata.key == MLX_KEY_LEFT && (keydata.action == MLX_RELEASE))
+    //     m->turndirection = 0;
+    // else if (keydata.key == MLX_KEY_RIGHT && (keydata.action == MLX_RELEASE))
+    //     m->turndirection = 0;
+    // else 
+    if (keydata.key == MLX_KEY_DOWN && (keydata.action == MLX_RELEASE))
+        m->walkdirection = 0;
+    else if (keydata.key == MLX_KEY_UP && (keydata.action == MLX_RELEASE))
+        m->walkdirection = 0;
 }

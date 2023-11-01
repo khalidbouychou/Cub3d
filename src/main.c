@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 15:10:03 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/01 01:24:24 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/01 23:41:14 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,13 +130,80 @@ void    valid_map(t_map *m)
     if (!h_map(m->sq_map) || !v_map(m->sq_map))
         exit(0);
 }
-
-//*******player*************
-void    move_player(t_mlx *smlx, t_map *m)
+void get_x_y_player(t_mlx *smlx , t_map *m)
 {
-    
+    int i;
+    int j;
+
+    i = 0;
+    while (m->sq_map[i])
+    {
+        j = 0;
+        while (m->sq_map[i][j])
+        {
+            if (m->sq_map[i][j] == 'N' || m->sq_map[i][j] == 'S' || m->sq_map[i][j] == 'W' || m->sq_map[i][j] == 'E')
+            {
+                smlx->xplayer = j;
+                smlx->yplayer = i;
+                return ;
+            }
+            j++;
+        }
+        i++;
+    }
+}
+int check_next_step(t_mlx *smlx, int x, int y)
+{
+    if (smlx->m->sq_map[x][y] == '1')
+        return (0);
+    return (1);
+}
+void update_pos_player(t_mlx *smlx)
+{
+
+
+    // smlx->m->rotatangle += smlx->m->turndirection * smlx->m->rotatespeed;
+    float smove = smlx->m->walkdirection * smlx->m->movespeed;
+    smlx->xplayer += (cos(smlx->m->rotatangle) * smove);
+    smlx->yplayer += (sin(smlx->m->rotatangle) * smove);
+    // int tx;
+    // int ty;
+
+    // int to_move;
+
+    // to_move = smlx->m->walkdirection  * smlx->m->movespeed * 0.05;
+    // printf("to move %f\n",smove);
+    printf("speed %f\n",smlx->m->movespeed);
+    printf("walk %d\n",smlx->m->walkdirection);
+    printf("turn %d\n",smlx->m->turndirection);
+    //  smlx->xplayer += cos(smlx->m->rotatangle) * to_move;
+    //  smlx->yplayer += sin(smlx->m->rotatangle) * to_move;
+
+}
+//*******player*************
+void move_player(void *param)
+{
+    t_mlx *smlx;
+
+    smlx = (t_mlx *)param;
+    mlx_delete_image(smlx->mlx, smlx->img);
+    smlx->img = mlx_new_image(smlx->mlx,(smlx->m->w_map * P_SIZE),(smlx->m->h_map * P_SIZE));
+    draw2d(smlx->m, smlx);
+    update_pos_player(smlx);
+    draw_player(smlx);
 }
 //********************
+
+void    init_vars(t_mlx *smlx, t_map *m)
+{
+    get_x_y_player(smlx ,m);
+    m->rotatespeed = 2 * (M_PI / 180);
+    // m->movespeed = 50;
+    m->movespeed = 2.0;
+    m->turndirection = 0;
+    m->walkdirection = 0;
+    m->rotatangle = (M_PI / 2);
+}
 int main(int ac, char **av)
 {
     (void) av;
@@ -153,9 +220,15 @@ int main(int ac, char **av)
     read_map("map.cub", &m, &count);
     valid_map(&m);
     lst_ture(&m, &l_ture);
+    smlx.m = &m;
     parse_rgb_color(l_ture);
     //--------------mlx-------------
+    init_vars(&smlx, &m);
     draw(&smlx, &m, l_ture);
-    move_player(&smlx, &m);
+    mlx_key_hook(smlx.mlx, &key, &m);
+    mlx_loop_hook(smlx.mlx, &move_player, &smlx);
+    mlx_loop(smlx.mlx);
+    mlx_terminate(smlx.mlx);
+    // move_player(&smlx, &m);
     return (0);
 }
