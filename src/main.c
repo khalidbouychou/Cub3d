@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 15:10:03 by khbouych          #+#    #+#             */
-/*   Updated: 2023/10/29 18:26:14 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/01 01:24:24 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,54 +125,37 @@ void    valid_map(t_map *m)
         i++;
     }
     m->sq_map[i] = NULL;
+    m->h_map = getsizemap(m->sq_map);
+    m->w_map = ft_strlen(m->sq_map[0]);
     if (!h_map(m->sq_map) || !v_map(m->sq_map))
-        return ;
+        exit(0);
 }
 
-void _rgb(char *rgb)
+//*******player*************
+void    move_player(t_mlx *smlx, t_map *m)
 {
-    char **rgb2d;
-    int i;
-
-    i = 0;
-    rgb2d = ft_split(rgb, ',');
-    while (rgb2d[i])
-    {
-        if (ft_atoi(rgb2d[i]) < 0 || ft_atoi(rgb2d[i]) > 255)
-        {
-            write (1, "Error\ninvalid rgb color\n", 25);
-            exit(0);
-        }
-        i++;
-    }
+    
 }
-void parse_rgb_color(t_txtr *ture)
-{
-    t_txtr *tmp;
-
-    tmp = ture;
-    while (tmp)
-    {
-        if (!ft_strncmp(tmp->key, "F", 1) || !ft_strncmp(tmp->key, "C", 1))
-            _rgb(tmp->value);
-        tmp = tmp->next;
-    }
-}
+//********************
 int main(int ac, char **av)
 {
     (void) av;
     (void) ac;
     t_map m;
     t_txtr *l_ture;
+    t_mlx smlx;
     int count;
 
     l_ture = malloc(sizeof(t_txtr));
     count = 0;
-    // if (ac != 2)
-    //     return (write(1, "To many Args\n", 13));
+    // // if (ac != 2)
+    // //     return (write(1, "To many Args\n", 13));
     read_map("map.cub", &m, &count);
     valid_map(&m);
     lst_ture(&m, &l_ture);
     parse_rgb_color(l_ture);
+    //--------------mlx-------------
+    draw(&smlx, &m, l_ture);
+    move_player(&smlx, &m);
     return (0);
 }

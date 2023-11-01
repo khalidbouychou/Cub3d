@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 14:00:46 by khbouych          #+#    #+#             */
-/*   Updated: 2023/10/29 18:27:31 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/10/31 18:09:15 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,24 @@
 # define CUB_H
 
 #include "get_next_line.h"
-
+#include "../MLX42/include/MLX42/MLX42.h"
+#define P_SIZE 32
 //****************************************
+
+typedef struct s_mlx
+{
+    mlx_t *mlx;
+    mlx_image_t *img;
+    int x;
+    int y;
+    int i;
+    int j;
+    int color;
+}              t_mlx;
 
 typedef struct s_map
 {
-    int fd; 
+    int fd;
     int i;
     char *line;
     char *ture;
@@ -27,6 +39,8 @@ typedef struct s_map
     char **map2d;
     char **ture2d;
     char **sq_map;
+    int h_map;
+    int w_map;
 }              t_map;
 
 typedef struct s_txtr
@@ -46,6 +60,7 @@ int	    ft_atoi(const char *str);
 int     checktures_space_tab(char **ture2d, int count);
 int     parse_rgb(char **ture2d);
 void    lst_ture(t_map *m, t_txtr **l_ture);
+void    parse_rgb_color(t_txtr *ture);
 //----------parse map----------------
 void    read_map(char *av ,t_map *m , int *count);
 //----------otils list----------------
@@ -57,6 +72,8 @@ void    free_ture2d(t_map *m);
 void    free_list(t_txtr *l_ture);
 int     check_ifvalid(char *line);
 char    *removeSpaces(char* str);
-
+//-----------mlx----------------
+void draw(t_mlx *smlx, t_map *m , t_txtr *l_ture);
+//-----------map----------------
 #endif
 

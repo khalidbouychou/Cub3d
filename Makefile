@@ -6,7 +6,7 @@
 #    By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/14 18:28:45 by khbouych          #+#    #+#              #
-#    Updated: 2023/10/29 17:36:10 by khbouych         ###   ########.fr        #
+#    Updated: 2023/10/30 15:43:39 by khbouych         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,37 +15,41 @@ NAME = cub3D
 HEADERS = headers/cub.h headers/get_next_line.h
 FLAGS = gcc -Wall -Wextra -Werror #-g -fsanitize=address
 
-#FLAG_MLX = -Lmlx -lmlx -framework OpenGL -framework IOkit -lglfw
-#INCLUDE = -I/Users/${USER}/.brew/Cellar/glfw/3.3.8/include/GLFW
-#LIB = -L/Users/${USER}/.brew/Cellar/glfw/3.3.8/lib
-#MLX = MLX42/build/libmlx42.a
-OBJ_DIR = src/objs
-DIR_SRC = src
+FLAG_MLX = -framework Cocoa -framework OpenGL -framework IOKit -lglfw
 
-FSRCS = $(wildcard $(DIR_SRC)/*.c)
+INCLUDE = -I/Users/${USER}/.brew/Cellar/glfw/3.3.8/include/GLFW
+LIB = -L/Users/${USER}/.brew/Cellar/glfw/3.3.8/lib
+MLX = MLX42/build/libmlx42.a
 
-OBJS =  $(patsubst $(DIR_SRC)/%.c,$(OBJ_DIR)/%.o,$(FSRCS))
 
-all: creat_dir $(NAME)
+SRC= src/free.c \
+	src/ft_split.c \
+	src/get_next_line_utils.c \
+	src/get_next_line.c \
+	src/o_list.c \
+	src/main.c \
+	src/outils_.c \
+	src/outils.c \
+	src/p_map.c \
+	src/p_textures1.c \
+	src/p_textures2.c \
+	src/mlx.c \
 
-$(NAME): $(OBJS)
-	@$(FLAGS) $(FLAG_MLX) $(OBJS) $(MLX) $(LIB) $(INCLUDE)-o $(NAME)
+OBJ= $(SRC:.c=.o)
 
-$(OBJ_DIR)/%.o: $(DIR_SRC)/%.c $(HEADERS)
-	@$(FLAGS) -c $< -o $@
-	@echo "compiled -- [$<] -- successfully!"
+all: $(NAME)
 
-creat_dir:
-	@mkdir -p $(OBJ_DIR)
+$(NAME): $(OBJ)
+	$(FLAGS) $(FLAG_MLX) $(OBJ) $(MLX) $(LIB) $(INCLUDE) -o $(NAME)
+
+%.o: %.c $(HEADERS)
+	$(FLAGS) $(INCLUDE) -c $< -o $@
 
 clean:
-	@rm -rf $(OBJ_DIR)
-	@echo "clean successfully!"
+	rm -fr $(OBJ)
 
-fclean: clean
-	@rm -rf $(NAME)
-	@echo "[cub3D] deleted successfully!"
+fclean:
+	rm -fr $(OBJ) $(NAME)
 
-re: fclean all
-
-.PHONY: all clean fclean re
+re : fclean all
+.PHONE: all clean fclean re

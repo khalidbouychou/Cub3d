@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 17:38:41 by khbouych          #+#    #+#             */
-/*   Updated: 2023/10/25 19:50:35 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/10/29 18:46:40 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,3 +46,34 @@ int ft_isdigit(int c)
 {
 	return (c >= '0' && c <= '9');
 }
+
+void _rgb(char *rgb)
+{
+    char **rgb2d;
+    int i;
+
+    i = 0;
+    rgb2d = ft_split(rgb, ',');
+    while (rgb2d[i])
+    {
+        if (ft_atoi(rgb2d[i]) < 0 || ft_atoi(rgb2d[i]) > 255)
+        {
+            write (1, "Error\ninvalid rgb color\n", 25);
+            exit(0);
+        }
+        i++;
+    }
+}
+void parse_rgb_color(t_txtr *ture)
+{
+    t_txtr *tmp;
+
+    tmp = ture;
+    while (tmp)
+    {
+        if (!ft_strncmp(tmp->key, "F", 1) || !ft_strncmp(tmp->key, "C", 1))
+            _rgb(tmp->value);
+        tmp = tmp->next;
+    }
+}
+
