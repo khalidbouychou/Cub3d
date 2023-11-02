@@ -61,5 +61,6 @@
     "cub.h": "c",
     "get_next_line.h": "c",
     "complex": "c"
-  }
+  },
+  "cmake.sourceDirectory": "/Users/khbouych/Desktop/Cub3d/MLX42"
 }

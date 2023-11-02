@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 15:10:03 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/02 18:48:39 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/02 21:04:54 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,42 +158,50 @@ int check_next_step(t_mlx *smlx, int x, int y)
         return (1);
     return (0);
 }
-void darw_line(t_mlx *smlx, int X1, int Y1)
+void darw_line(t_mlx *smlx, float X1, float Y1)
 {
-    // calculate dx & dy 
-    int dx = X1 - smlx->xplayer * P_SIZE; 
-    int dy = Y1 - smlx->yplayer * P_SIZE; 
-  
-    // calculate steps required for generating pixels 
-    int steps = abs(dx) > abs(dy) ? abs(dx) : abs(dy);
-  
-    // calculate increment in x & y for each steps 
-    float Xinc = dx / (float)steps; 
-    float Yinc = dy / (float)steps; 
-  
-    // Put pixel for each step 
-    float X = smlx->xplayer * P_SIZE; 
-    float Y = smlx->yplayer * P_SIZE;
-    for (int i = 0; i <= steps; i++)
-    { 
-        mlx_put_pixel(smlx->img, X, Y, 0xFF0000FF);  // put pixel at (X,Y)
-        X += Xinc; 
-        Y += Yinc; 
-    } 
+    int     steps;
+    float   Xincrement;
+    float   Yincrement;
+    int     i;
+
+    i = -1;
+    smlx->delta_x = X1 - smlx->xplayer * P_SIZE;
+    smlx->delta_y = Y1 - smlx->yplayer * P_SIZE;
+    if (fabsf(smlx->delta_x) > fabsf(smlx->delta_y))
+        steps = fabsf(smlx->delta_x);
+    else
+        steps = fabsf(smlx->delta_y);
+    Xincrement = smlx->delta_x / (float)steps;
+    Yincrement = smlx->delta_y / (float)steps;
+    smlx->newXplayer = smlx->xplayer * P_SIZE;
+    smlx->newYplayer = smlx->yplayer * P_SIZE;
+
+    while (++i < steps)
+    {
+        mlx_put_pixel(smlx->img, smlx->newXplayer, smlx->newYplayer, 0xFEF200FF);  // put pixel at (X,Y)
+        smlx->newXplayer += Xincrement;
+        smlx->newYplayer += Yincrement;
+    }
 }
 
 void update_pos_player(t_mlx *smlx)
 {
+    float speed_sin;
+    float smove;
+    float sb;
+	float speed_cos;
+    float ca;
     smlx->m->rotatangle += smlx->m->rotatespeed * smlx->m->turndirection; //rotation
-    float smove = smlx->m->walkdirection  * smlx->m->movespeed  ; //walk
-    float speed_sin = smove * sin(smlx->m->rotatangle);
-	float speed_cos = smove * cos(smlx->m->rotatangle);
-    float ca = smlx->xplayer + speed_cos;
-    float sb = smlx->yplayer + speed_sin;
+    smove = smlx->m->walkdirection  * smlx->m->movespeed  ; //walk
+    speed_sin = smove * sin(smlx->m->rotatangle);
+    speed_cos = smove * cos(smlx->m->rotatangle);
+    ca = smlx->xplayer + speed_cos;
+    sb = smlx->yplayer + speed_sin;
     if (check_next_step(smlx, ca, sb))
     {
        smlx->xplayer = ca;
-	    smlx->yplayer = sb;
+	   smlx->yplayer = sb;
     }
 }
 //*******player*************
@@ -207,7 +215,7 @@ void move_player(void *param)
     draw2d(smlx->m, smlx);
     update_pos_player(smlx);
     draw_player(smlx);
-    darw_line(smlx,(smlx->xplayer * P_SIZE) + 20, (smlx->xplayer * P_SIZE) + 20);
+    darw_line(smlx,((smlx->xplayer * P_SIZE) + (cos(smlx->m->rotatangle) * 30)), ((smlx->yplayer * P_SIZE)  + (sin(smlx->m->rotatangle) * 30)));
 }
 //********************
 

@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 14:00:46 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/02 18:14:41 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/02 21:04:07 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,44 +21,48 @@
 //****************************************
 typedef struct s_map
 {
-    int fd;
-    int i;
-    char *line;
-    char *ture;
-    char *map;
-    char **map2d;
-    char **ture2d;
-    char **sq_map;
-    int h_map;
-    int w_map;
-    int turndirection;
-    int walkdirection;
-    float rotatangle;
-    float movespeed;
-    float rotatespeed;
+    int     fd;
+    int     i;
+    char    *line;
+    char    *ture;
+    char    *map;
+    char    **map2d;
+    char    **ture2d;
+    char    **sq_map;
+    int     h_map;
+    int     w_map;
+    int     turndirection;
+    int     walkdirection;
+    float   rotatangle;
+    float   movespeed;
+    float   rotatespeed;
 }              t_map;
 
 typedef struct s_mlx
 {
-    mlx_t *mlx;
+    mlx_t       *mlx;
     mlx_image_t *img;
-    int x;
-    int y;
-    int i;
-    int j;
-    int color;
-    float xplayer;
-    float yplayer;
-    t_map *m;
+    t_map       *m;
+    int         x;
+    int         y;
+    int         i;
+    int         j;
+    int         color;
+    float       xplayer;
+    float       yplayer;
+    float       newXplayer;
+    float       newYplayer;
+    float       delta_x;
+    float       delta_y;
 }              t_mlx;
 
 
 typedef struct s_txtr
 {
-    char *key;
-    char *value;
-    struct s_txtr *next;
-} t_txtr;
+    char            *key;
+    char            *value;
+    struct s_txtr   *next;
+}               t_txtr;
 
 char	*ft_strdup(char *s1);
 char	**ft_split(char  *s, char c);
@@ -83,8 +87,8 @@ void    free_list(t_txtr *l_ture);
 int     check_ifvalid(char *line);
 char    *removeSpaces(char* str);
 //-----------mlx----------------
-void draw(t_mlx *smlx, t_map *m , t_txtr *l_ture);
-void key(mlx_key_data_t keydata , void *param);
+void    draw(t_mlx *smlx, t_map *m , t_txtr *l_ture);
+void    key(mlx_key_data_t keydata , void *param);
 void    draw2d(t_map *m, t_mlx *smlx);
 void    draw_player(t_mlx *smlx);
 //-----------map----------------
