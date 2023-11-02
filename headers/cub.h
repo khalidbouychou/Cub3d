@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 14:00:46 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/01 20:16:30 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/02 16:44:59 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,13 @@ typedef struct s_mlx
 {
     mlx_t *mlx;
     mlx_image_t *img;
-    float x;
-    float y;
+    int x;
+    int y;
     int i;
     int j;
     int color;
-    int xplayer;
-    int yplayer;
+    float xplayer;
+    float yplayer;
     t_map *m;
 }              t_mlx;
 

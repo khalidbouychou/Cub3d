@@ -59,6 +59,7 @@
   "C_Cpp.errorSquiggles": "disabled",
   "files.associations": {
     "cub.h": "c",
-    "get_next_line.h": "c"
+    "get_next_line.h": "c",
+    "complex": "c"
   }
 }

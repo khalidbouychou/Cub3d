@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:38:38 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/01 23:14:21 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/02 16:48:36 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,21 +83,24 @@ void key(mlx_key_data_t keydata , void *param)
     m = param;
     if (keydata.key == MLX_KEY_ESCAPE && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
         exit(0);
-    // else if (keydata.key == MLX_KEY_LEFT && (keydata.action == MLX_PRESS))
-    //     m->turndirection = -1;
-    // else if (keydata.key == MLX_KEY_RIGHT && (keydata.action == MLX_PRESS))
-    //     m->turndirection = 1;
+    else if (keydata.key == MLX_KEY_LEFT && (keydata.action == MLX_PRESS))
+        m->turndirection = -1;
+    else if (keydata.key == MLX_KEY_RIGHT && (keydata.action == MLX_PRESS))
+        m->turndirection = 1;
     else if (keydata.key == MLX_KEY_DOWN && (keydata.action == MLX_PRESS))
+    {
         m->walkdirection = -1;
+    }
     else if (keydata.key == MLX_KEY_UP && keydata.action == MLX_PRESS)
+    {
         m->walkdirection = 1;
+    }
 
-    // if (keydata.key == MLX_KEY_LEFT && (keydata.action == MLX_RELEASE))
-    //     m->turndirection = 0;
-    // else if (keydata.key == MLX_KEY_RIGHT && (keydata.action == MLX_RELEASE))
-    //     m->turndirection = 0;
-    // else 
-    if (keydata.key == MLX_KEY_DOWN && (keydata.action == MLX_RELEASE))
+    if (keydata.key == MLX_KEY_LEFT && (keydata.action == MLX_RELEASE))
+        m->turndirection = 0;
+    else if (keydata.key == MLX_KEY_RIGHT && (keydata.action == MLX_RELEASE))
+        m->turndirection = 0;
+    else if (keydata.key == MLX_KEY_DOWN && (keydata.action == MLX_RELEASE))
         m->walkdirection = 0;
     else if (keydata.key == MLX_KEY_UP && (keydata.action == MLX_RELEASE))
         m->walkdirection = 0;

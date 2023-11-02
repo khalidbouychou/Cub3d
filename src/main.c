@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 15:10:03 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/01 23:41:14 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/02 16:50:17 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,25 +160,14 @@ int check_next_step(t_mlx *smlx, int x, int y)
 }
 void update_pos_player(t_mlx *smlx)
 {
+  
 
-
-    // smlx->m->rotatangle += smlx->m->turndirection * smlx->m->rotatespeed;
-    float smove = smlx->m->walkdirection * smlx->m->movespeed;
-    smlx->xplayer += (cos(smlx->m->rotatangle) * smove);
-    smlx->yplayer += (sin(smlx->m->rotatangle) * smove);
-    // int tx;
-    // int ty;
-
-    // int to_move;
-
-    // to_move = smlx->m->walkdirection  * smlx->m->movespeed * 0.05;
-    // printf("to move %f\n",smove);
-    printf("speed %f\n",smlx->m->movespeed);
-    printf("walk %d\n",smlx->m->walkdirection);
-    printf("turn %d\n",smlx->m->turndirection);
-    //  smlx->xplayer += cos(smlx->m->rotatangle) * to_move;
-    //  smlx->yplayer += sin(smlx->m->rotatangle) * to_move;
-
+    smlx->m->rotatangle += smlx->m->rotatespeed * smlx->m->turndirection; //rotation
+    float smove = smlx->m->walkdirection  * smlx->m->movespeed * 0.05; //walk
+    float speed_sin = smove * sin(smlx->m->rotatangle);
+	float speed_cos = smove * cos(smlx->m->rotatangle);
+	smlx->xplayer +=  speed_cos;
+	smlx->yplayer +=  speed_sin;
 }
 //*******player*************
 void move_player(void *param)
@@ -194,15 +183,14 @@ void move_player(void *param)
 }
 //********************
 
-void    init_vars(t_mlx *smlx, t_map *m)
+void    init_vars(t_mlx *smlx)
 {
-    get_x_y_player(smlx ,m);
-    m->rotatespeed = 2 * (M_PI / 180);
-    // m->movespeed = 50;
-    m->movespeed = 2.0;
-    m->turndirection = 0;
-    m->walkdirection = 0;
-    m->rotatangle = (M_PI / 2);
+    
+    smlx->m->turndirection = 0;
+    smlx->m->walkdirection = 0;
+    smlx->m->rotatangle = M_PI / 2;
+    smlx->m->movespeed = 20.0;
+    smlx->m->rotatespeed = 2 * (M_PI / 180);
 }
 int main(int ac, char **av)
 {
@@ -223,7 +211,8 @@ int main(int ac, char **av)
     smlx.m = &m;
     parse_rgb_color(l_ture);
     //--------------mlx-------------
-    init_vars(&smlx, &m);
+    init_vars(&smlx);;
+    get_x_y_player(&smlx, &m);
     draw(&smlx, &m, l_ture);
     mlx_key_hook(smlx.mlx, &key, &m);
     mlx_loop_hook(smlx.mlx, &move_player, &smlx);
