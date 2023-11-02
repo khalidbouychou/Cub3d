@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 14:00:46 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/02 16:44:59 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/02 18:14:41 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define CUB_H
 
 #include <math.h>
+#include <stdlib.h>
 #include "get_next_line.h"
 #include "../MLX42/include/MLX42/MLX42.h"
 #define P_SIZE 32

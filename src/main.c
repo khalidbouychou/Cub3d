@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 15:10:03 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/02 16:50:17 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/02 18:48:39 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,20 +154,47 @@ void get_x_y_player(t_mlx *smlx , t_map *m)
 }
 int check_next_step(t_mlx *smlx, int x, int y)
 {
-    if (smlx->m->sq_map[x][y] == '1')
-        return (0);
-    return (1);
+    if (smlx->m->sq_map[y][x] != '1')
+        return (1);
+    return (0);
 }
+void darw_line(t_mlx *smlx, int X1, int Y1)
+{
+    // calculate dx & dy 
+    int dx = X1 - smlx->xplayer * P_SIZE; 
+    int dy = Y1 - smlx->yplayer * P_SIZE; 
+  
+    // calculate steps required for generating pixels 
+    int steps = abs(dx) > abs(dy) ? abs(dx) : abs(dy);
+  
+    // calculate increment in x & y for each steps 
+    float Xinc = dx / (float)steps; 
+    float Yinc = dy / (float)steps; 
+  
+    // Put pixel for each step 
+    float X = smlx->xplayer * P_SIZE; 
+    float Y = smlx->yplayer * P_SIZE;
+    for (int i = 0; i <= steps; i++)
+    { 
+        mlx_put_pixel(smlx->img, X, Y, 0xFF0000FF);  // put pixel at (X,Y)
+        X += Xinc; 
+        Y += Yinc; 
+    } 
+}
+
 void update_pos_player(t_mlx *smlx)
 {
-  
-
     smlx->m->rotatangle += smlx->m->rotatespeed * smlx->m->turndirection; //rotation
-    float smove = smlx->m->walkdirection  * smlx->m->movespeed * 0.05; //walk
+    float smove = smlx->m->walkdirection  * smlx->m->movespeed  ; //walk
     float speed_sin = smove * sin(smlx->m->rotatangle);
 	float speed_cos = smove * cos(smlx->m->rotatangle);
-	smlx->xplayer +=  speed_cos;
-	smlx->yplayer +=  speed_sin;
+    float ca = smlx->xplayer + speed_cos;
+    float sb = smlx->yplayer + speed_sin;
+    if (check_next_step(smlx, ca, sb))
+    {
+       smlx->xplayer = ca;
+	    smlx->yplayer = sb;
+    }
 }
 //*******player*************
 void move_player(void *param)
@@ -180,6 +207,7 @@ void move_player(void *param)
     draw2d(smlx->m, smlx);
     update_pos_player(smlx);
     draw_player(smlx);
+    darw_line(smlx,(smlx->xplayer * P_SIZE) + 20, (smlx->xplayer * P_SIZE) + 20);
 }
 //********************
 
@@ -189,7 +217,7 @@ void    init_vars(t_mlx *smlx)
     smlx->m->turndirection = 0;
     smlx->m->walkdirection = 0;
     smlx->m->rotatangle = M_PI / 2;
-    smlx->m->movespeed = 20.0;
+    smlx->m->movespeed = 0.3;
     smlx->m->rotatespeed = 2 * (M_PI / 180);
 }
 int main(int ac, char **av)
@@ -214,6 +242,7 @@ int main(int ac, char **av)
     init_vars(&smlx);;
     get_x_y_player(&smlx, &m);
     draw(&smlx, &m, l_ture);
+    
     mlx_key_hook(smlx.mlx, &key, &m);
     mlx_loop_hook(smlx.mlx, &move_player, &smlx);
     mlx_loop(smlx.mlx);
