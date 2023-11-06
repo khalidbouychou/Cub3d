@@ -6,7 +6,7 @@
 #    By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/14 18:28:45 by khbouych          #+#    #+#              #
-#    Updated: 2023/11/06 02:31:08 by khbouych         ###   ########.fr        #
+#    Updated: 2023/11/06 02:31:40 by khbouych         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,7 +52,6 @@ $(NAME): $(OBJ)
 git:
 	make fclean
 	git add .
-	git status
 	git commit -m "$(git_msg)"
 	git push
 clean:
