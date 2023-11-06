@@ -6,7 +6,7 @@
 #    By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/14 18:28:45 by khbouych          #+#    #+#              #
-#    Updated: 2023/11/02 17:04:15 by khbouych         ###   ########.fr        #
+#    Updated: 2023/11/06 02:29:30 by khbouych         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ INCLUDE = -I/Users/${USER}/.brew/Cellar/glfw/3.3.8/include/GLFW
 LIB = -L/Users/${USER}/.brew/Cellar/glfw/3.3.8/lib
 MLX = MLX42/build/libmlx42.a
 
+msg := update_cube3d
 
 SRC= src/free.c \
 	src/ft_split.c \
@@ -48,6 +49,12 @@ $(NAME): $(OBJ)
 	@echo "\033[0;32m[------ Compiling -----] $(NAME) File \033[0m"
 	@$(FLAGS) $(INCLUDE) -c $< -o $@
 
+git :
+	make fclean
+	git add .
+	git status
+	git commit -m "$(msg)"
+	git push
 clean:
 	@echo "\033[0;31m[------ Cleaning -----] $(OBJ)\033[0m"
 	@rm -fr $(OBJ)

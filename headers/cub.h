@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 14:00:46 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/02 21:04:07 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/05 18:14:28 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,10 @@
 #include "get_next_line.h"
 #include "../MLX42/include/MLX42/MLX42.h"
 #define P_SIZE 32
+#define MINIMAP_SCALE_FACTOR 1.0
+#define FOV_ANGLE (60 * (M_PI / 180))
+#define NUM_RAYS 1
+#define TILE_SIZE 64
 //****************************************
 typedef struct s_map
 {

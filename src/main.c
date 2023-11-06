@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 15:10:03 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/02 21:04:54 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/05 18:10:24 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,10 +211,10 @@ void move_player(void *param)
 
     smlx = (t_mlx *)param;
     mlx_delete_image(smlx->mlx, smlx->img);
-    smlx->img = mlx_new_image(smlx->mlx,(smlx->m->w_map * P_SIZE),(smlx->m->h_map * P_SIZE));
+    // smlx->img = mlx_new_image(smlx->mlx,(smlx->m->w_map * P_SIZE),(smlx->m->h_map * P_SIZE));
     draw2d(smlx->m, smlx);
     update_pos_player(smlx);
-    draw_player(smlx);
+    // draw_player(smlx);
     darw_line(smlx,((smlx->xplayer * P_SIZE) + (cos(smlx->m->rotatangle) * 30)), ((smlx->yplayer * P_SIZE)  + (sin(smlx->m->rotatangle) * 30)));
 }
 //********************
@@ -225,7 +225,7 @@ void    init_vars(t_mlx *smlx)
     smlx->m->turndirection = 0;
     smlx->m->walkdirection = 0;
     smlx->m->rotatangle = M_PI / 2;
-    smlx->m->movespeed = 0.3;
+    smlx->m->movespeed = 0.1;
     smlx->m->rotatespeed = 2 * (M_PI / 180);
 }
 int main(int ac, char **av)
