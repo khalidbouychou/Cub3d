@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:38:38 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/02 17:27:56 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/07 12:01:05 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,10 @@ void    draw2d(t_map *m, t_mlx *smlx)
 void    draw_player(t_mlx *smlx)
 {
     smlx->i = -1;
-    while (++smlx->i < 5)
+    while (++smlx->i < smlx->w_player)
     {
         smlx->j = -1;
-        while (++smlx->j < 5)
+        while (++smlx->j < smlx->h_player)
             mlx_put_pixel(smlx->img,(smlx->xplayer * P_SIZE) + smlx->i ,(smlx->yplayer * P_SIZE) + smlx->j, 0xFF0000FF);
     }
 }
@@ -101,3 +101,4 @@ void key(mlx_key_data_t keydata , void *param)
     else if (keydata.key == MLX_KEY_UP && (keydata.action == MLX_RELEASE))
         m->walkdirection = 0;
 }
+

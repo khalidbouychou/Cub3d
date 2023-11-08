@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 14:00:46 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/05 18:14:28 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/08 11:57:25 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,32 @@
 
 #include <math.h>
 #include <stdlib.h>
+#include <limits.h>
 #include "get_next_line.h"
 #include "../MLX42/include/MLX42/MLX42.h"
 #define P_SIZE 32
 #define MINIMAP_SCALE_FACTOR 1.0
 #define FOV_ANGLE (60 * (M_PI / 180))
 #define NUM_RAYS 1
-#define TILE_SIZE 64
+#define TILE_SIZE 32
+#define FPS 30
+#define NUM_TEXTURES 8
+#define TEXTURE_WIDTH 64
+#define FOV_ANGLE (60 * (M_PI / 180))
+
 //****************************************
+typedef struct s_ray
+{
+    float rayAngle;
+    float wallHitX;
+    float wallHitY;
+    float distance;
+    int wasHitVertical;
+    int isRayFacingUp;
+    int isRayFacingDown;
+    int isRayFacingLeft;
+    int isRayFacingRight;
+}              t_ray;
 typedef struct s_map
 {
     int     fd;
@@ -37,9 +55,10 @@ typedef struct s_map
     int     w_map;
     int     turndirection;
     int     walkdirection;
-    float   rotatangle;
+    float   rotationangle;
     float   movespeed;
-    float   rotatespeed;
+    float   rotatespeed;//walkspeed
+    t_ray   rays[NUM_RAYS];
 }              t_map;
 
 typedef struct s_mlx
@@ -54,10 +73,15 @@ typedef struct s_mlx
     int         color;
     float       xplayer;
     float       yplayer;
+    float       h_player;
+    float       w_player;
     float       newXplayer;
     float       newYplayer;
     float       delta_x;
     float       delta_y;
+    int         w_window;
+    int         h_window;
+    int         nbr_rays;
 }              t_mlx;
 
 
@@ -96,5 +120,18 @@ void    key(mlx_key_data_t keydata , void *param);
 void    draw2d(t_map *m, t_mlx *smlx);
 void    draw_player(t_mlx *smlx);
 //-----------map----------------
+int     getsize_largline(char **map);
+int     getsizemap(char **map);
+char    *fixline(char *line, int maxlen);
+int     h_map(char **map);
+int     v_map(char **map);
+void    get_x_y_player(t_mlx *smlx , t_map *m);
+void    valid_map(t_map *m);
+//-----------player----------------
+void    castAllRay(t_mlx *smlx);
+void    move_player(void *param);
+void    init_vars(t_mlx *smlx);
+void    darw_line(t_mlx *smlx, float X1, float Y1);
+int     check_next_step(t_mlx *smlx, int x, int y);
+//-----------------raycasting----------------
 #endif
-

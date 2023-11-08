@@ -6,7 +6,7 @@
 #    By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/14 18:28:45 by khbouych          #+#    #+#              #
-#    Updated: 2023/11/06 16:05:54 by khbouych         ###   ########.fr        #
+#    Updated: 2023/11/08 11:35:58 by khbouych         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,18 +23,10 @@ MLX = MLX42/build/libmlx42.a
 
 git_msg = update_cube3d
 
-SRC= src/free.c \
-	src/ft_split.c \
-	src/get_next_line_utils.c \
-	src/get_next_line.c \
-	src/o_list.c \
-	src/main.c \
-	src/outils_.c \
-	src/outils.c \
-	src/p_map.c \
-	src/p_textures1.c \
-	src/p_textures2.c \
-	src/mlx.c \
+SRC= src/free.c src/ft_split.c src/get_next_line_utils.c \
+	src/get_next_line.c src/o_list.c src/main.c src/outils_.c \
+	src/outils.c src/p_map.c src/p_textures1.c src/p_textures2.c \
+	src/mlx.c src/o_map.c  src/o_map1.c src/raycasting.c \
 
 OBJ= $(SRC:.c=.o)
 
