@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 11:03:58 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/08 18:14:09 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/08 19:02:27 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,20 +59,20 @@ void get_x_y_player(t_mlx *smlx, t_map *m)
 
 int check_next_step_2(t_mlx *smlx, float x, float y)
 {
-    float newx = floor(x / P_SIZE);
-    float newy = floor(y / P_SIZE);
-    if (x < 0 || x > smlx->m->w_map || y < 0 || y > smlx->m->h_map)
-      return (0);
-    if (smlx->m->sq_map[(int)newy][(int)newx] == '1')
+    int newx = floor(x / P_SIZE);
+    int newy = floor(y / P_SIZE);
+    if (x < 0 || x > smlx->w_window || y < 0 || y > smlx->h_window)
+        return (0);
+    if (smlx->m->sq_map[newy][newx] == '1')
         return (0);
     return (1);
 }
 
 int check_next_step(t_mlx *smlx, float x, float y)
 {
-    if (smlx->m->sq_map[(int)y][(int)x] != '1')
-        return (1);
-    return (0);
+    if (smlx->m->sq_map[(int)y][(int)x] == '1')
+        return (0);
+    return (1);
 }
 
 void update_pos_player(t_mlx *smlx)
@@ -97,7 +97,7 @@ void update_pos_player(t_mlx *smlx)
 
 void renderRays(t_mlx *smlx)
 {
-    for (int r = 0; r < NUM_RAYS; r++)
+    for (int r = 0; r < smlx->nbr_rays; r++)
     {
         draw_line(smlx, smlx->m->rays[r].wallHitX, smlx->m->rays[r].wallHitY);
     }
@@ -114,5 +114,5 @@ void move_player(void *param)
     renderRays(smlx);
     update_pos_player(smlx);
     draw_player(smlx);
-    // draw_line(smlx,((smlx->xplayer * P_SIZE) + (cos(smlx->m->rotationangle) * 20)), ((smlx->yplayer * P_SIZE)  + (sin(smlx->m->rotationangle) * 20)));
+    draw_line(smlx, ((smlx->xplayer * P_SIZE) + (cos(smlx->m->rotationangle) * 20)), ((smlx->yplayer * P_SIZE) + (sin(smlx->m->rotationangle) * 20)));
 }

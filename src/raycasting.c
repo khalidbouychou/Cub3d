@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 11:07:17 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/08 18:12:28 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/08 18:58:59 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ float normalizeAngle(float rayAngle)
 
 float distanceBetweenPoints(float xp, float yp, float x, float y)
 {
-    return (sqrt(((x - xp) * (x - xp)) + ((y - yp) * (y - yp))));
+    return (sqrt((x - xp) * (x - xp) + (y - yp) * (y - yp)));
 }
 void castRay(float rayAngle, int IdCast, t_mlx *smlx)
 {
@@ -39,15 +39,15 @@ void castRay(float rayAngle, int IdCast, t_mlx *smlx)
     float horzWallHitX = 0;
     float horzWallHitY = 0;
     // Find the y-coordinate of the closest horizontal grid intersection
-    yintercept = floor(smlx->yplayer / TILE_SIZE) * TILE_SIZE;
-    yintercept += isRayFacingDown ? TILE_SIZE : 0;
+    yintercept = floor(smlx->yplayer / P_SIZE) * P_SIZE;
+    yintercept += isRayFacingDown ? P_SIZE : 0;
     // Find the x-coordinate of the closest horizontal grid intersection
     xintercept = smlx->xplayer + (yintercept - smlx->yplayer) / tan(rayAngle);
     // Calculate the increment xstep and ystep (deltax and deltay)
-    ystep = TILE_SIZE;
+    ystep = P_SIZE;
     ystep *= isRayFacingUp ? -1 : 1;
 
-    xstep = TILE_SIZE / tan(rayAngle);
+    xstep = P_SIZE / tan(rayAngle);
     xstep *= (isRayFacingLeft && xstep > 0) ? -1 : 1;
     xstep *= (isRayFacingRight && xstep < 0) ? -1 : 1;
 
@@ -59,7 +59,7 @@ void castRay(float rayAngle, int IdCast, t_mlx *smlx)
         float xToCheck = nextHorzTouchX;
         float yToCheck = nextHorzTouchY + (isRayFacingUp ? -1 : 0);
 
-        if (check_next_step_2(smlx, xToCheck, yToCheck))
+        if (check_next_step_2(smlx, xToCheck, yToCheck) == 0)
         {
             foundHorzWallHit = 1;
             horzWallHitX = nextHorzTouchX;
@@ -78,17 +78,17 @@ void castRay(float rayAngle, int IdCast, t_mlx *smlx)
     float vertWallHitX = 0;
     float vertWallHitY = 0;
     // Find the x-coordinate of the closest vertical grid intersection
-    xintercept = floor(smlx->xplayer / TILE_SIZE) * TILE_SIZE;
-    xintercept += isRayFacingRight ? TILE_SIZE : 0;
+    xintercept = floor(smlx->xplayer / P_SIZE) * P_SIZE;
+    xintercept += isRayFacingRight ? P_SIZE : 0;
 
     // Find the y-coordinate of the closest vertical grid intersection
 
     yintercept = smlx->yplayer + (xintercept - smlx->xplayer) * tan(rayAngle);
 
-    xstep = TILE_SIZE;
+    xstep = P_SIZE;
     xstep *= isRayFacingLeft ? -1 : 1;
 
-    ystep = TILE_SIZE * tan(rayAngle);
+    ystep = P_SIZE * tan(rayAngle);
     ystep *= (isRayFacingUp && ystep > 0) ? -1 : 1;
     ystep *= (isRayFacingDown && ystep < 0) ? -1 : 1;
 
@@ -100,7 +100,7 @@ void castRay(float rayAngle, int IdCast, t_mlx *smlx)
         float xToCheck = nextVertTouchX + (isRayFacingLeft ? -1 : 0);
         float yToCheck = nextVertTouchY;
 
-        if (check_next_step_2(smlx, xToCheck, yToCheck))
+        if (check_next_step_2(smlx, xToCheck, yToCheck) == 0)
         {
             foundVertWallHit = 1;
             vertWallHitX = nextVertTouchX;
@@ -139,10 +139,10 @@ void castRay(float rayAngle, int IdCast, t_mlx *smlx)
 void castAllRay(t_mlx *smlx)
 {
     float rayAngle = smlx->m->rotationangle - (FOV_ANGLE / 2);
-    for (int IdCast = 0; IdCast < NUM_RAYS; IdCast++)
+    for (int IdCast = 0; IdCast < smlx->nbr_rays; IdCast++)
     {
         castRay(rayAngle, IdCast, smlx);
-        rayAngle += FOV_ANGLE / NUM_RAYS;
+        rayAngle += FOV_ANGLE / smlx->nbr_rays;
     }
 }
 
@@ -159,6 +159,7 @@ void init_vars(t_mlx *smlx)
     smlx->h_player = 3;
     smlx->w_player = 3;
     smlx->nbr_rays = smlx->w_window;
+    smlx->m->rays = malloc(sizeof(t_ray) * smlx->nbr_rays);
 }
 
 void draw_line(t_mlx *smlx, float X1, float Y1)
