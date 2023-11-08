@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 14:00:46 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/08 11:57:25 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/08 18:08:11 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,9 @@ void    valid_map(t_map *m);
 void    castAllRay(t_mlx *smlx);
 void    move_player(void *param);
 void    init_vars(t_mlx *smlx);
-void    darw_line(t_mlx *smlx, float X1, float Y1);
-int     check_next_step(t_mlx *smlx, int x, int y);
+void    draw_line(t_mlx *smlx, float X1, float Y1);
+// int     check_next_step(t_mlx *smlx, float x, float y);
+int check_next_step(t_mlx *smlx, float x, float y);
+int check_next_step_2(t_mlx *smlx, float x, float y);
 //-----------------raycasting----------------
 #endif

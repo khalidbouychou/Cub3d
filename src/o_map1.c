@@ -6,13 +6,13 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 11:03:58 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/08 11:11:27 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/08 18:14:09 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/cub.h"
 
-void    valid_map(t_map *m)
+void valid_map(t_map *m)
 {
     int i;
     int maxlen;
@@ -34,7 +34,7 @@ void    valid_map(t_map *m)
     if (!h_map(m->sq_map) || !v_map(m->sq_map))
         exit(0);
 }
-void get_x_y_player(t_mlx *smlx , t_map *m)
+void get_x_y_player(t_mlx *smlx, t_map *m)
 {
     int i;
     int j;
@@ -49,7 +49,7 @@ void get_x_y_player(t_mlx *smlx , t_map *m)
             {
                 smlx->xplayer = j;
                 smlx->yplayer = i;
-                return ;
+                return;
             }
             j++;
         }
@@ -57,31 +57,50 @@ void get_x_y_player(t_mlx *smlx , t_map *m)
     }
 }
 
-int check_next_step(t_mlx *smlx, int x, int y)
+int check_next_step_2(t_mlx *smlx, float x, float y)
 {
-    if (smlx->m->sq_map[y][x] != '1')
+    float newx = floor(x / P_SIZE);
+    float newy = floor(y / P_SIZE);
+    if (x < 0 || x > smlx->m->w_map || y < 0 || y > smlx->m->h_map)
+      return (0);
+    if (smlx->m->sq_map[(int)newy][(int)newx] == '1')
+        return (0);
+    return (1);
+}
+
+int check_next_step(t_mlx *smlx, float x, float y)
+{
+    if (smlx->m->sq_map[(int)y][(int)x] != '1')
         return (1);
     return (0);
 }
 
 void update_pos_player(t_mlx *smlx)
 {
-  float speed_sin;
-  float smove;
-  float sb;
-  float speed_cos;
-  float ca;
-  smlx->m->rotationangle += smlx->m->rotatespeed * smlx->m->turndirection; //rotation
-  smove = smlx->m->walkdirection  * smlx->m->movespeed  ; //walk
-  speed_sin = smove * sin(smlx->m->rotationangle);
-  speed_cos = smove * cos(smlx->m->rotationangle);
-  ca = smlx->xplayer + speed_cos;
-  sb = smlx->yplayer + speed_sin;
-  if (check_next_step(smlx, ca, sb))
-  {
-      smlx->xplayer = ca;
-      smlx->yplayer = sb;
-  }
+    float speed_sin;
+    float smove;
+    float sb;
+    float speed_cos;
+    float ca;
+    smlx->m->rotationangle += smlx->m->rotatespeed * smlx->m->turndirection; // rotation
+    smove = smlx->m->walkdirection * smlx->m->movespeed;                     // walk
+    speed_sin = smove * sin(smlx->m->rotationangle);
+    speed_cos = smove * cos(smlx->m->rotationangle);
+    ca = smlx->xplayer + speed_cos;
+    sb = smlx->yplayer + speed_sin;
+    if (check_next_step(smlx, ca, sb))
+    {
+        smlx->xplayer = ca;
+        smlx->yplayer = sb;
+    }
+}
+
+void renderRays(t_mlx *smlx)
+{
+    for (int r = 0; r < NUM_RAYS; r++)
+    {
+        draw_line(smlx, smlx->m->rays[r].wallHitX, smlx->m->rays[r].wallHitY);
+    }
 }
 void move_player(void *param)
 {
@@ -89,11 +108,11 @@ void move_player(void *param)
 
     smlx = (t_mlx *)param;
     mlx_delete_image(smlx->mlx, smlx->img);
-    // smlx->img = mlx_new_image(smlx->mlx,(smlx->m->w_map * P_SIZE),(smlx->m->h_map * P_SIZE));
+    // smlx->img = mlx_new_image(smlx->mlx, (smlx->m->w_map * P_SIZE), (smlx->m->h_map * P_SIZE));
     draw2d(smlx->m, smlx);
+    castAllRay(smlx);
+    renderRays(smlx);
     update_pos_player(smlx);
     draw_player(smlx);
-    // darw_line(smlx,((smlx->xplayer * P_SIZE) + (cos(smlx->m->rotationangle) * 20)), ((smlx->yplayer * P_SIZE)  + (sin(smlx->m->rotationangle) * 20)));
-    castAllRay(smlx);
+    // draw_line(smlx,((smlx->xplayer * P_SIZE) + (cos(smlx->m->rotationangle) * 20)), ((smlx->yplayer * P_SIZE)  + (sin(smlx->m->rotationangle) * 20)));
 }
-

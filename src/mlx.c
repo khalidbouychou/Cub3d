@@ -6,13 +6,13 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:38:38 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/07 12:01:05 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/08 18:10:28 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/cub.h"
 
-void    draw_square(mlx_image_t *img, t_mlx **smlx , int color)
+void draw_square(mlx_image_t *img, t_mlx **smlx, int color)
 {
     t_mlx *tmp;
 
@@ -23,15 +23,15 @@ void    draw_square(mlx_image_t *img, t_mlx **smlx , int color)
     {
         tmp->y = -1;
         while (++tmp->y < P_SIZE)
-            mlx_put_pixel(img,(tmp->j * P_SIZE) + tmp->x ,(tmp->i * P_SIZE) + tmp->y, color);
+            mlx_put_pixel(img, (tmp->j * P_SIZE) + tmp->x, (tmp->i * P_SIZE) + tmp->y, color);
     }
 }
 
-void    draw2d(t_map *m, t_mlx *smlx)
+void draw2d(t_map *m, t_mlx *smlx)
 {
     smlx->i = 0;
     smlx->color = 0;
-    smlx->img = mlx_new_image(smlx->mlx,(smlx->m->w_map * P_SIZE),(smlx->m->h_map * P_SIZE));
+    smlx->img = mlx_new_image(smlx->mlx, (smlx->m->w_map * P_SIZE), (smlx->m->h_map * P_SIZE));
     if (!smlx->img)
     {
         printf("error\n");
@@ -43,40 +43,40 @@ void    draw2d(t_map *m, t_mlx *smlx)
         while (m->sq_map[smlx->i][smlx->j])
         {
             if (m->sq_map[smlx->i][smlx->j] == '1')
-                draw_square(smlx->img,&smlx,0x00FFFFFF);
+                draw_square(smlx->img, &smlx, 0x00FFFFFF);
             else
-                draw_square(smlx->img,&smlx, 0x00000000);
+                draw_square(smlx->img, &smlx, 0x00000000);
             smlx->j++;
         }
         smlx->i++;
     }
-    mlx_image_to_window(smlx->mlx,smlx->img,0,0);
+    mlx_image_to_window(smlx->mlx, smlx->img, 0, 0);
 }
 
-void    draw_player(t_mlx *smlx)
+void draw_player(t_mlx *smlx)
 {
     smlx->i = -1;
     while (++smlx->i < smlx->w_player)
     {
         smlx->j = -1;
         while (++smlx->j < smlx->h_player)
-            mlx_put_pixel(smlx->img,(smlx->xplayer * P_SIZE) + smlx->i ,(smlx->yplayer * P_SIZE) + smlx->j, 0xFF0000FF);
+            mlx_put_pixel(smlx->img, (smlx->xplayer * P_SIZE) + smlx->i, (smlx->yplayer * P_SIZE) + smlx->j, 0xFF0000FF);
     }
 }
-void draw(t_mlx *smlx, t_map *m , t_txtr *l_ture)
+void draw(t_mlx *smlx, t_map *m, t_txtr *l_ture)
 {
     (void)l_ture;
-    smlx->mlx = mlx_init((m->w_map * P_SIZE),(m->h_map * P_SIZE),"cub3d",false);
+    smlx->mlx = mlx_init((m->w_map * P_SIZE), (m->h_map * P_SIZE), "cub3d", false);
     if (!smlx->mlx)
     {
-        printf("%s",mlx_strerror(mlx_errno));
+        printf("%s", mlx_strerror(mlx_errno));
         exit(EXIT_FAILURE);
     }
-    draw2d(m,smlx);
+    draw2d(m, smlx);
     draw_player(smlx);
 }
 
-void key(mlx_key_data_t keydata , void *param)
+void key(mlx_key_data_t keydata, void *param)
 {
 
     t_map *m;
@@ -101,4 +101,3 @@ void key(mlx_key_data_t keydata , void *param)
     else if (keydata.key == MLX_KEY_UP && (keydata.action == MLX_RELEASE))
         m->walkdirection = 0;
 }
-
