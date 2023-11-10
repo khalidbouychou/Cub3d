@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 11:07:17 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/08 18:58:59 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/09 23:12:49 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void castRay(float rayAngle, int IdCast, t_mlx *smlx)
         float xToCheck = nextHorzTouchX;
         float yToCheck = nextHorzTouchY + (isRayFacingUp ? -1 : 0);
 
-        if (check_next_step_2(smlx, xToCheck, yToCheck) == 0)
+        if (check_next_step_2(smlx, xToCheck, yToCheck))
         {
             foundHorzWallHit = 1;
             horzWallHitX = nextHorzTouchX;
@@ -100,7 +100,7 @@ void castRay(float rayAngle, int IdCast, t_mlx *smlx)
         float xToCheck = nextVertTouchX + (isRayFacingLeft ? -1 : 0);
         float yToCheck = nextVertTouchY;
 
-        if (check_next_step_2(smlx, xToCheck, yToCheck) == 0)
+        if (check_next_step_2(smlx, xToCheck, yToCheck))
         {
             foundVertWallHit = 1;
             vertWallHitX = nextVertTouchX;
@@ -153,7 +153,7 @@ void init_vars(t_mlx *smlx)
     smlx->m->walkdirection = 0;
     smlx->m->rotationangle = M_PI / 2;
     smlx->m->rotatespeed = 2 * (M_PI / 180);
-    smlx->m->movespeed = 0.1;
+    smlx->m->movespeed = 3;
     smlx->w_window = smlx->m->w_map * P_SIZE;
     smlx->h_window = smlx->m->h_map * P_SIZE;
     smlx->h_player = 3;
@@ -170,20 +170,21 @@ void draw_line(t_mlx *smlx, float X1, float Y1)
     int i;
 
     i = 0;
-    smlx->delta_x = X1 - smlx->xplayer * P_SIZE;
-    smlx->delta_y = Y1 - smlx->yplayer * P_SIZE;
+    smlx->delta_x = X1 - smlx->xplayer;
+    smlx->delta_y = Y1 - smlx->yplayer;
     if (fabsf(smlx->delta_x) > fabsf(smlx->delta_y))
         steps = fabsf(smlx->delta_x);
     else
         steps = fabsf(smlx->delta_y);
     Xincrement = smlx->delta_x / (float)steps;
     Yincrement = smlx->delta_y / (float)steps;
-    smlx->newXplayer = smlx->xplayer * P_SIZE;
-    smlx->newYplayer = smlx->yplayer * P_SIZE;
+    smlx->newXplayer = smlx->xplayer ;
+    smlx->newYplayer = smlx->yplayer;
 
     while (i < steps)
     {
-        mlx_put_pixel(smlx->img, smlx->newXplayer, smlx->newYplayer, 0XFFFFFFFF); // put pixel at (X,Y)
+        if(smlx->newXplayer > 0 && smlx->newXplayer < smlx->w_window && smlx->newYplayer > 0 && smlx->newYplayer < smlx->h_window)
+            mlx_put_pixel(smlx->img, smlx->newXplayer, smlx->newYplayer, 0x960058FF); // put pixel at (X,Y)
         smlx->newXplayer += Xincrement;
         smlx->newYplayer += Yincrement;
         i++;

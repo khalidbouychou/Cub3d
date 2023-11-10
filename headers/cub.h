@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 14:00:46 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/08 18:49:55 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/09 21:18:17 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include <limits.h>
 #include "get_next_line.h"
 #include "../MLX42/include/MLX42/MLX42.h"
-#define P_SIZE 32
+#define P_SIZE 64
 #define FOV_ANGLE (60 * (M_PI / 180))
 #define FOV_ANGLE (60 * (M_PI / 180))
 

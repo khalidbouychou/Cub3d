@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 11:03:58 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/08 19:02:27 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/08 22:54:47 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ void get_x_y_player(t_mlx *smlx, t_map *m)
         {
             if (m->sq_map[i][j] == 'N' || m->sq_map[i][j] == 'S' || m->sq_map[i][j] == 'W' || m->sq_map[i][j] == 'E')
             {
-                smlx->xplayer = j;
-                smlx->yplayer = i;
+                smlx->xplayer = j * P_SIZE;
+                smlx->yplayer = i * P_SIZE;
                 return;
             }
             j++;
@@ -62,15 +62,15 @@ int check_next_step_2(t_mlx *smlx, float x, float y)
     int newx = floor(x / P_SIZE);
     int newy = floor(y / P_SIZE);
     if (x < 0 || x > smlx->w_window || y < 0 || y > smlx->h_window)
-        return (0);
+        return (1);
     if (smlx->m->sq_map[newy][newx] == '1')
-        return (0);
-    return (1);
+        return (1);
+    return (0);
 }
 
 int check_next_step(t_mlx *smlx, float x, float y)
 {
-    if (smlx->m->sq_map[(int)y][(int)x] == '1')
+    if (smlx->m->sq_map[(int)floor(y / P_SIZE)][(int)floor(x / P_SIZE)] == '1')
         return (0);
     return (1);
 }
@@ -82,6 +82,7 @@ void update_pos_player(t_mlx *smlx)
     float sb;
     float speed_cos;
     float ca;
+    
     smlx->m->rotationangle += smlx->m->rotatespeed * smlx->m->turndirection; // rotation
     smove = smlx->m->walkdirection * smlx->m->movespeed;                     // walk
     speed_sin = smove * sin(smlx->m->rotationangle);
@@ -99,7 +100,8 @@ void renderRays(t_mlx *smlx)
 {
     for (int r = 0; r < smlx->nbr_rays; r++)
     {
-        draw_line(smlx, smlx->m->rays[r].wallHitX, smlx->m->rays[r].wallHitY);
+        // draw_line(smlx, smlx->m->rays[r].wallHitX, smlx->m->rays[r].wallHitY);
+        draw_line(smlx, smlx->xplayer +( cos(smlx->m->rays[r].rayAngle) * smlx->m->rays[r].distance) , smlx->yplayer + ( sin(smlx->m->rays[r].rayAngle) * smlx->m->rays[r].distance));
     }
 }
 void move_player(void *param)
@@ -108,11 +110,10 @@ void move_player(void *param)
 
     smlx = (t_mlx *)param;
     mlx_delete_image(smlx->mlx, smlx->img);
-    // smlx->img = mlx_new_image(smlx->mlx, (smlx->m->w_map * P_SIZE), (smlx->m->h_map * P_SIZE));
     draw2d(smlx->m, smlx);
+    update_pos_player(smlx);
     castAllRay(smlx);
     renderRays(smlx);
-    update_pos_player(smlx);
-    draw_player(smlx);
-    draw_line(smlx, ((smlx->xplayer * P_SIZE) + (cos(smlx->m->rotationangle) * 20)), ((smlx->yplayer * P_SIZE) + (sin(smlx->m->rotationangle) * 20)));
+    // draw_player(smlx);
+    // draw_line(smlx, ((smlx->xplayer * P_SIZE) + (cos(smlx->m->rotationangle) * 20)), ((smlx->yplayer * P_SIZE) + (sin(smlx->m->rotationangle) * 20)));
 }
