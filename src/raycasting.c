@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 11:07:17 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/09 23:12:49 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/11 21:02:41 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void castRay(float rayAngle, int IdCast, t_mlx *smlx)
     float nextHorzTouchX = xintercept;
     float nextHorzTouchY = yintercept;
 
-    while (nextHorzTouchX >= 0 && nextHorzTouchX <= smlx->w_window && nextHorzTouchY >= 0 && nextHorzTouchY <= smlx->h_window)
+    while (nextHorzTouchX >= 0 && nextHorzTouchX <= WINDOW_W && nextHorzTouchY >= 0 && nextHorzTouchY <= WINDOW_H)
     {
         float xToCheck = nextHorzTouchX;
         float yToCheck = nextHorzTouchY + (isRayFacingUp ? -1 : 0);
@@ -142,7 +142,7 @@ void castAllRay(t_mlx *smlx)
     for (int IdCast = 0; IdCast < smlx->nbr_rays; IdCast++)
     {
         castRay(rayAngle, IdCast, smlx);
-        rayAngle += FOV_ANGLE / smlx->nbr_rays;
+        rayAngle += FOV_ANGLE / (float)smlx->nbr_rays;
     }
 }
 
@@ -152,19 +152,17 @@ void init_vars(t_mlx *smlx)
     smlx->m->turndirection = 0;
     smlx->m->walkdirection = 0;
     smlx->m->rotationangle = M_PI / 2;
-    smlx->m->rotatespeed = 2 * (M_PI / 180);
+    smlx->m->rotatespeed = 3 * (M_PI / 180);
     smlx->m->movespeed = 3;
     smlx->w_window = smlx->m->w_map * P_SIZE;
     smlx->h_window = smlx->m->h_map * P_SIZE;
-    smlx->h_player = 3;
-    smlx->w_player = 3;
-    smlx->nbr_rays = smlx->w_window;
+    smlx->nbr_rays = WINDOW_W;
     smlx->m->rays = malloc(sizeof(t_ray) * smlx->nbr_rays);
 }
 
 void draw_line(t_mlx *smlx, float X1, float Y1)
 {
-    int steps;
+    int steps = 0;
     float Xincrement;
     float Yincrement;
     int i;
@@ -172,18 +170,18 @@ void draw_line(t_mlx *smlx, float X1, float Y1)
     i = 0;
     smlx->delta_x = X1 - smlx->xplayer;
     smlx->delta_y = Y1 - smlx->yplayer;
-    if (fabsf(smlx->delta_x) > fabsf(smlx->delta_y))
-        steps = fabsf(smlx->delta_x);
+    if (f_abs(smlx->delta_x) > f_abs(smlx->delta_y))
+        steps = f_abs(smlx->delta_x);
     else
-        steps = fabsf(smlx->delta_y);
+        steps = f_abs(smlx->delta_y);
     Xincrement = smlx->delta_x / (float)steps;
     Yincrement = smlx->delta_y / (float)steps;
-    smlx->newXplayer = smlx->xplayer ;
+    smlx->newXplayer = smlx->xplayer;
     smlx->newYplayer = smlx->yplayer;
 
     while (i < steps)
     {
-        if(smlx->newXplayer > 0 && smlx->newXplayer < smlx->w_window && smlx->newYplayer > 0 && smlx->newYplayer < smlx->h_window)
+        if (smlx->newXplayer > 0 && smlx->newXplayer < smlx->w_window && smlx->newYplayer > 0 && smlx->newYplayer < smlx->h_window)
             mlx_put_pixel(smlx->img, smlx->newXplayer, smlx->newYplayer, 0x960058FF); // put pixel at (X,Y)
         smlx->newXplayer += Xincrement;
         smlx->newYplayer += Yincrement;

@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 11:03:58 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/08 22:54:47 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/11 20:34:33 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,10 +98,56 @@ void update_pos_player(t_mlx *smlx)
 
 void renderRays(t_mlx *smlx)
 {
-    for (int r = 0; r < smlx->nbr_rays; r++)
+    int r;
+
+    r = -1;
+    while (++r < smlx->nbr_rays)
+        draw_line(smlx, smlx->xplayer +( cos(smlx->m->rays[r].rayAngle) * smlx->m->rays[r].distance) ,
+            smlx->yplayer + ( sin(smlx->m->rays[r].rayAngle) * smlx->m->rays[r].distance));
+}
+
+void wall_projection_3dmap(t_mlx *smlx)
+{
+    int i;
+
+    i = -1;
+    while (++i < smlx->nbr_rays)
     {
-        // draw_line(smlx, smlx->m->rays[r].wallHitX, smlx->m->rays[r].wallHitY);
-        draw_line(smlx, smlx->xplayer +( cos(smlx->m->rays[r].rayAngle) * smlx->m->rays[r].distance) , smlx->yplayer + ( sin(smlx->m->rays[r].rayAngle) * smlx->m->rays[r].distance));
+        float perpDistance = smlx->m->rays[i].distance * cos(smlx->m->rays[i].rayAngle - smlx->m->rotationangle);
+        float distanceProjPlane = (WINDOW_W/ 2) / tan(FOV_ANGLE / 2);
+        float projectedWallHeight = (P_SIZE / perpDistance) * distanceProjPlane;
+        int wallStripHeight = (int)projectedWallHeight;
+        int wallTopPixel = (WINDOW_H / 2) - (wallStripHeight / 2);
+        wallTopPixel = wallTopPixel < 0 ? 0 : wallTopPixel;
+        int wallBottomPixel = (WINDOW_H / 2) + (wallStripHeight / 2);
+        wallBottomPixel = wallBottomPixel > WINDOW_H ? WINDOW_H : wallBottomPixel;
+
+        //render the wall from wallTopPixel to wallBottomPixel
+        int j;
+        j = wallTopPixel;
+        while (j < wallBottomPixel)
+        {
+            mlx_put_pixel(smlx->img, i, j, 0xFF2400FF);
+            j++;
+        }
+    }
+}
+
+void drawmap(t_mlx *smlx, t_map *m)
+{
+    smlx->i = 0;
+    while (m->sq_map[smlx->i])
+    {
+        smlx->j = 0;
+        while (m->sq_map[smlx->i][smlx->j])
+        {
+            if (m->sq_map[smlx->i][smlx->j] == '1')
+                draw_square(smlx->img, &smlx, 0xdbdbdbFF);
+            else
+                draw_square(smlx->img, &smlx, 0x00000000);
+            smlx->j++;
+        }
+        smlx->i++;
     }
 }
 void move_player(void *param)
@@ -110,10 +156,11 @@ void move_player(void *param)
 
     smlx = (t_mlx *)param;
     mlx_delete_image(smlx->mlx, smlx->img);
-    draw2d(smlx->m, smlx);
+    draw2d(smlx);
     update_pos_player(smlx);
     castAllRay(smlx);
-    renderRays(smlx);
-    // draw_player(smlx);
-    // draw_line(smlx, ((smlx->xplayer * P_SIZE) + (cos(smlx->m->rotationangle) * 20)), ((smlx->yplayer * P_SIZE) + (sin(smlx->m->rotationangle) * 20)));
+    wall_projection_3dmap(smlx);
+    drawmap(smlx, smlx->m);
+    draw_player(smlx);
+    // renderRays(smlx);
 }

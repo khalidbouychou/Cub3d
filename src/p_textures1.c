@@ -29,7 +29,7 @@ int check_ifvalid(char *line)
 
 int checktures_space_tab(char **ture2d, int count)
 {
-    int i;
+    int i;    
 
     i = -1;
     if (count != 6)

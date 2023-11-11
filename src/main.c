@@ -5,12 +5,19 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/15 15:10:03 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/09 19:48:45 by khbouych         ###   ########.fr       */
+/*   Created: 2023/11/11 13:41:29 by khbouych          #+#    #+#             */
+/*   Updated: 2023/11/11 22:12:32 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/cub.h"
+
+float f_abs(float number)
+{
+    if (number < 0)
+        return -number;
+    return number;
+}
 
 int main(int ac, char **av)
 {

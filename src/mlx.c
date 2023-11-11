@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:38:38 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/09 17:56:57 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/11 21:03:36 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,32 +23,19 @@ void draw_square(mlx_image_t *img, t_mlx **smlx, int color)
     {
         tmp->y = -1;
         while (++tmp->y < P_SIZE)
-            mlx_put_pixel(img, (tmp->j * P_SIZE) + tmp->x, (tmp->i * P_SIZE) + tmp->y, color);
+            mlx_put_pixel(img, ((tmp->j * P_SIZE) + tmp->x) * 0.2, ((tmp->i * P_SIZE)  + tmp->y) * 0.2, color);
     }
 }
 
-void draw2d(t_map *m, t_mlx *smlx)
+void draw2d(t_mlx *smlx)
 {
     smlx->i = 0;
     smlx->color = 0;
-    smlx->img = mlx_new_image(smlx->mlx, (smlx->m->w_map * P_SIZE), (smlx->m->h_map * P_SIZE));
+    smlx->img = mlx_new_image(smlx->mlx, WINDOW_W, WINDOW_H);
     if (!smlx->img)
     {
         printf("error\n");
         exit(0);
-    }
-    while (m->sq_map[smlx->i])
-    {
-        smlx->j = 0;
-        while (m->sq_map[smlx->i][smlx->j])
-        {
-            if (m->sq_map[smlx->i][smlx->j] == '1')
-                draw_square(smlx->img, &smlx, 0xdbdbdbFF);
-            else
-                draw_square(smlx->img, &smlx, 0x00000000);
-            smlx->j++;
-        }
-        smlx->i++;
     }
     mlx_image_to_window(smlx->mlx, smlx->img, 0, 0);
 }
@@ -56,23 +43,24 @@ void draw2d(t_map *m, t_mlx *smlx)
 void draw_player(t_mlx *smlx)
 {
     smlx->i = -1;
-    while (++smlx->i < smlx->w_player)
+    while (++smlx->i < W_PLAYER)
     {
         smlx->j = -1;
-        while (++smlx->j < smlx->h_player)
-            mlx_put_pixel(smlx->img, smlx->xplayer  + smlx->i, smlx->yplayer  + smlx->j, 0xFF0000FF);
+        while (++smlx->j < H_PLAYER)
+            mlx_put_pixel(smlx->img, (smlx->xplayer  + smlx->i) * 0.2, (smlx->yplayer  + smlx->j) * 0.2, 0xFFFFFFFF);
     }
 }
 void draw(t_mlx *smlx, t_map *m, t_txtr *l_ture)
 {
     (void)l_ture;
-    smlx->mlx = mlx_init((m->w_map * P_SIZE), (m->h_map * P_SIZE), "KHBOUYCH", false);
+    (void)m;
+    smlx->mlx = mlx_init(WINDOW_W,WINDOW_H, "KHBOUYCH", false);
     if (!smlx->mlx)
     {
         printf("%s", mlx_strerror(mlx_errno));
         exit(EXIT_FAILURE);
     }
-    draw2d(m, smlx);
+    draw2d(smlx);
     draw_player(smlx);
 }
 

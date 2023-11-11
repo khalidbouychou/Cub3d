@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 14:00:46 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/09 21:18:17 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/11 22:10:15 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,15 @@
 #include <limits.h>
 #include "get_next_line.h"
 #include "../MLX42/include/MLX42/MLX42.h"
-#define P_SIZE 64
+#define P_SIZE 32
 #define FOV_ANGLE (60 * (M_PI / 180))
-#define FOV_ANGLE (60 * (M_PI / 180))
-
-//****************************************
+#define WINDOW_H 1080
+#define WINDOW_W 1920
+#define H_PLAYER 5
+#define W_PLAYER 5
+#define HALF_WIDTH  (WINDOW_W / 2)
+#define HALF_HEIGHT (WINDOW_H / 2)
+//****************************************  
 typedef struct s_ray
 {
     float rayAngle;
@@ -111,7 +115,9 @@ char    *removeSpaces(char* str);
 //-----------mlx----------------
 void    draw(t_mlx *smlx, t_map *m , t_txtr *l_ture);
 void    key(mlx_key_data_t keydata , void *param);
-void    draw2d(t_map *m, t_mlx *smlx);
+void    draw2d(t_mlx *smlx);
+void drawmap(t_mlx *smlx, t_map *m);
+void draw_square(mlx_image_t *img, t_mlx **smlx, int color);
 void    draw_player(t_mlx *smlx);
 //-----------map----------------
 int     getsize_largline(char **map);
@@ -129,5 +135,6 @@ void    draw_line(t_mlx *smlx, float X1, float Y1);
 // int     check_next_step(t_mlx *smlx, float x, float y);
 int check_next_step(t_mlx *smlx, float x, float y);
 int check_next_step_2(t_mlx *smlx, float x, float y);
+float f_abs(float number);
 //-----------------raycasting----------------
 #endif
