@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:41:29 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/11 22:12:32 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/12 23:39:59 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,27 @@ float f_abs(float number)
     return number;
 }
 
+void splitwindow(t_mlx *smlx)
+{
+    int i;
+    int j;
+
+    i = -1;
+    while (++i < HALF_HEIGHT)
+    {
+        j = -1;
+        while (++j < WINDOW_W)
+            mlx_put_pixel(smlx->img, j, i, 0xA0E9FFFF);
+    }
+    i = HALF_HEIGHT;
+    while (i < WINDOW_H)
+    {
+        j = -1;
+        while (++j < WINDOW_W)
+            mlx_put_pixel(smlx->img, j, i, 0x28334AFF);
+        i++;
+    }
+}
 int main(int ac, char **av)
 {
     (void) av;
@@ -38,10 +59,10 @@ int main(int ac, char **av)
     smlx.m = &m;
     parse_rgb_color(l_ture);
     //--------------mlx-------------
-    init_vars(&smlx);;
+    smlx.l_ture = l_ture;
+    init_vars(&smlx);
     get_x_y_player(&smlx, &m);
     draw(&smlx, &m, l_ture);
-
     mlx_key_hook(smlx.mlx, &key, &m);
     mlx_loop_hook(smlx.mlx, &move_player, &smlx);
     mlx_loop(smlx.mlx);

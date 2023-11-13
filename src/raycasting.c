@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 11:07:17 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/11 21:02:41 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/12 23:41:05 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,11 +153,12 @@ void init_vars(t_mlx *smlx)
     smlx->m->walkdirection = 0;
     smlx->m->rotationangle = M_PI / 2;
     smlx->m->rotatespeed = 3 * (M_PI / 180);
-    smlx->m->movespeed = 3;
+    smlx->m->movespeed = 1.5;
     smlx->w_window = smlx->m->w_map * P_SIZE;
     smlx->h_window = smlx->m->h_map * P_SIZE;
     smlx->nbr_rays = WINDOW_W;
     smlx->m->rays = malloc(sizeof(t_ray) * smlx->nbr_rays);
+    smlx->texture = mlx_load_png(smlx->l_ture->value);
 }
 
 void draw_line(t_mlx *smlx, float X1, float Y1)

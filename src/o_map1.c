@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 11:03:58 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/11 20:34:33 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/12 23:54:10 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,14 +120,16 @@ void wall_projection_3dmap(t_mlx *smlx)
         int wallTopPixel = (WINDOW_H / 2) - (wallStripHeight / 2);
         wallTopPixel = wallTopPixel < 0 ? 0 : wallTopPixel;
         int wallBottomPixel = (WINDOW_H / 2) + (wallStripHeight / 2);
-        wallBottomPixel = wallBottomPixel > WINDOW_H ? WINDOW_H : wallBottomPixel;
+        wallBottomPixel = wallBottomPixel > WINDOW_H ? WINDOW_H : wallBottomPixel; 
 
         //render the wall from wallTopPixel to wallBottomPixel
         int j;
         j = wallTopPixel;
         while (j < wallBottomPixel)
         {
-            mlx_put_pixel(smlx->img, i, j, 0xFF2400FF);
+            int color = 0xFC6C85FF;
+            color = smlx->m->rays[i].wasHitVertical ? 0xFC6C85FF: 0xFC8EACFF;
+            mlx_put_pixel(smlx->img, i, j,color);
             j++;
         }
     }
@@ -159,6 +161,7 @@ void move_player(void *param)
     draw2d(smlx);
     update_pos_player(smlx);
     castAllRay(smlx);
+    splitwindow(smlx);
     wall_projection_3dmap(smlx);
     drawmap(smlx, smlx->m);
     draw_player(smlx);

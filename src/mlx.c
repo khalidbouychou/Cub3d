@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:38:38 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/11 21:03:36 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/12 23:32:00 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void draw(t_mlx *smlx, t_map *m, t_txtr *l_ture)
 {
     (void)l_ture;
     (void)m;
-    smlx->mlx = mlx_init(WINDOW_W,WINDOW_H, "KHBOUYCH", false);
+    smlx->mlx = mlx_init(WINDOW_W,WINDOW_H, "CUB3D", false);
     if (!smlx->mlx)
     {
         printf("%s", mlx_strerror(mlx_errno));

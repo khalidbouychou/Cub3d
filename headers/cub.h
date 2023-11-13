@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 14:00:46 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/11 22:10:15 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/12 18:29:15 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,20 @@ typedef struct s_map
     t_ray   *rays;
 }              t_map;
 
+
+typedef struct s_txtr
+{
+    char            *key;
+    char            *value;
+    struct s_txtr   *next;
+}               t_txtr;
+
 typedef struct s_mlx
 {
     mlx_t       *mlx;
     mlx_image_t *img;
     t_map       *m;
+    t_txtr      *l_ture;
     int         x;
     int         y;
     int         i;
@@ -80,15 +89,10 @@ typedef struct s_mlx
     int         w_window;
     int         h_window;
     int         nbr_rays;
+    mlx_texture_t *texture;
 }              t_mlx;
 
 
-typedef struct s_txtr
-{
-    char            *key;
-    char            *value;
-    struct s_txtr   *next;
-}               t_txtr;
 
 char	*ft_strdup(char *s1);
 char	**ft_split(char  *s, char c);
@@ -135,6 +139,7 @@ void    draw_line(t_mlx *smlx, float X1, float Y1);
 // int     check_next_step(t_mlx *smlx, float x, float y);
 int check_next_step(t_mlx *smlx, float x, float y);
 int check_next_step_2(t_mlx *smlx, float x, float y);
+void splitwindow(t_mlx *smlx);
 float f_abs(float number);
 //-----------------raycasting----------------
 #endif

@@ -60,7 +60,10 @@
   "files.associations": {
     "cub.h": "c",
     "get_next_line.h": "c",
-    "complex": "c"
+    "complex": "c",
+    "ios": "c",
+    "atomic": "c",
+    "cstdint": "c"
   },
   "cmake.sourceDirectory": "/Users/khbouych/Desktop/Cub3d/MLX42"
 }
