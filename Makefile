@@ -6,7 +6,7 @@
 #    By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/14 18:28:45 by khbouych          #+#    #+#              #
-#    Updated: 2023/11/11 22:10:06 by khbouych         ###   ########.fr        #
+#    Updated: 2023/11/13 19:19:05 by khbouych         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ SRC= src/free.c src/ft_split.c src/get_next_line_utils.c \
 OBJ= $(SRC:.c=.o)
 
 all: $(NAME)
-	# @echo "\033[0;32m[------ Compilation done -------]\033[0m"
+	@echo "\033[0;32m[------ Compilation done -------]\033[0m"
 
 $(NAME): $(OBJ)
 	@echo "\033[0;32m[------ Compiling -----] $(NAME)\033[0m"

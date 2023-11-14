@@ -6,12 +6,12 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 14:00:46 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/12 18:29:15 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/13 18:24:35 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB_H
-# define CUB_H
+// #ifndef CUB_H
+// # define CUB_H
 
 #include <math.h>
 #include <stdlib.h>
@@ -90,6 +90,8 @@ typedef struct s_mlx
     int         h_window;
     int         nbr_rays;
     mlx_texture_t *texture;
+    unsigned int floor_color;
+    unsigned int ceiling_color;
 }              t_mlx;
 
 
@@ -142,4 +144,4 @@ int check_next_step_2(t_mlx *smlx, float x, float y);
 void splitwindow(t_mlx *smlx);
 float f_abs(float number);
 //-----------------raycasting----------------
-#endif
+// #endif
