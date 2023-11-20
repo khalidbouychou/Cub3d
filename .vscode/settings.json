@@ -63,7 +63,8 @@
     "complex": "c",
     "ios": "c",
     "atomic": "c",
-    "cstdint": "c"
+    "cstdint": "c",
+    "mlx42.h": "c"
   },
   "cmake.sourceDirectory": "/Users/khbouych/Desktop/Cub3d/MLX42"
 }

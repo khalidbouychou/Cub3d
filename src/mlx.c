@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:38:38 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/12 23:32:00 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/18 21:23:33 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void draw_square(mlx_image_t *img, t_mlx **smlx, int color)
     {
         tmp->y = -1;
         while (++tmp->y < P_SIZE)
-            mlx_put_pixel(img, ((tmp->j * P_SIZE) + tmp->x) * 0.2, ((tmp->i * P_SIZE)  + tmp->y) * 0.2, color);
+            mlx_put_pixel(img, ((tmp->j * P_SIZE) + tmp->x), ((tmp->i * P_SIZE)  + tmp->y), color);
     }
 }
 
@@ -31,7 +31,7 @@ void draw2d(t_mlx *smlx)
 {
     smlx->i = 0;
     smlx->color = 0;
-    smlx->img = mlx_new_image(smlx->mlx, WINDOW_W, WINDOW_H);
+    smlx->img = mlx_new_image(smlx->mlx,WINDOW_W,WINDOW_H);
     if (!smlx->img)
     {
         printf("error\n");
@@ -47,7 +47,7 @@ void draw_player(t_mlx *smlx)
     {
         smlx->j = -1;
         while (++smlx->j < H_PLAYER)
-            mlx_put_pixel(smlx->img, (smlx->xplayer  + smlx->i) * 0.2, (smlx->yplayer  + smlx->j) * 0.2, 0xFFFFFFFF);
+            mlx_put_pixel(smlx->img, (smlx->xplayer  + smlx->i), (smlx->yplayer  + smlx->j), 0xFFFFFFFF);
     }
 }
 void draw(t_mlx *smlx, t_map *m, t_txtr *l_ture)
@@ -61,7 +61,7 @@ void draw(t_mlx *smlx, t_map *m, t_txtr *l_ture)
         exit(EXIT_FAILURE);
     }
     draw2d(smlx);
-    draw_player(smlx);
+    // draw_player(smlx);
 }
 
 void key(mlx_key_data_t keydata, void *param)

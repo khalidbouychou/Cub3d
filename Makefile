@@ -6,14 +6,14 @@
 #    By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/14 18:28:45 by khbouych          #+#    #+#              #
-#    Updated: 2023/11/13 19:19:05 by khbouych         ###   ########.fr        #
+#    Updated: 2023/11/18 21:18:41 by khbouych         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3D
 
 HEADERS = headers/cub.h headers/get_next_line.h
-FLAGS = gcc -Wall -Wextra -Werror #-g -fsanitize=address
+FLAGS = gcc -g -Wall -Wextra -Werror -fsanitize=address
 
 FLAG_MLX = -framework Cocoa -framework OpenGL -framework IOKit -lglfw
 

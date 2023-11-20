@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 11:07:17 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/12 23:41:05 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/19 22:53:39 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void castRay(float rayAngle, int IdCast, t_mlx *smlx)
     int isRayFacingDown = rayAngle > 0 && rayAngle < M_PI;
     int isRayFacingUp = !isRayFacingDown;
 
-    int isRayFacingRight = rayAngle < 0.5 * M_PI || rayAngle > 1.5 * M_PI;
+    int isRayFacingRight = rayAngle < (0.5 * M_PI )|| rayAngle > (1.5 * M_PI);
     int isRayFacingLeft = !isRayFacingRight;
 
     float xintercept, yintercept, xstep, ystep;
@@ -54,7 +54,7 @@ void castRay(float rayAngle, int IdCast, t_mlx *smlx)
     float nextHorzTouchX = xintercept;
     float nextHorzTouchY = yintercept;
 
-    while (nextHorzTouchX >= 0 && nextHorzTouchX <= WINDOW_W && nextHorzTouchY >= 0 && nextHorzTouchY <= WINDOW_H)
+    while (nextHorzTouchX < smlx->w_window && nextHorzTouchX > 0 && nextHorzTouchY < smlx->h_window && nextHorzTouchY > 0)
     {
         float xToCheck = nextHorzTouchX;
         float yToCheck = nextHorzTouchY + (isRayFacingUp ? -1 : 0);
@@ -95,7 +95,7 @@ void castRay(float rayAngle, int IdCast, t_mlx *smlx)
     float nextVertTouchX = xintercept;
     float nextVertTouchY = yintercept;
 
-    while (nextVertTouchX >= 0 && nextVertTouchX <= smlx->w_window && nextVertTouchY >= 0 && nextVertTouchY <= smlx->h_window)
+    while (nextVertTouchX < smlx->w_window && nextVertTouchX > 0 && nextVertTouchY < smlx->h_window && nextVertTouchY > 0)
     {
         float xToCheck = nextVertTouchX + (isRayFacingLeft ? -1 : 0);
         float yToCheck = nextVertTouchY;
@@ -188,4 +188,9 @@ void draw_line(t_mlx *smlx, float X1, float Y1)
         smlx->newYplayer += Yincrement;
         i++;
     }
+}
+
+uint32_t rgbcolor(int r, int g, int b , int a)
+{
+    return (r << 24 | g << 16 | b << 8 | a);
 }

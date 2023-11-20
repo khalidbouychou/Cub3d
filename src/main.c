@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:41:29 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/13 18:25:12 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/19 22:33:30 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void splitwindow(t_mlx *smlx)
     i = -1;
     while (++i < HALF_HEIGHT)
     {
+        puts("ok");
         j = -1;
         while (++j < WINDOW_W)
             mlx_put_pixel(smlx->img, j, i, 0xA0E9FFFF);
@@ -34,6 +35,7 @@ void splitwindow(t_mlx *smlx)
     i = HALF_HEIGHT;
     while (i < WINDOW_H)
     {
+        puts("--");
         j = -1;
         while (++j < WINDOW_W)
             mlx_put_pixel(smlx->img, j, i, 0x28334AFF);
