@@ -6,11 +6,12 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:32:07 by khbouych          #+#    #+#             */
-/*   Updated: 2023/10/21 17:19:38 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/22 22:58:24 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/cub.h"
+#include "../../headers/cub.h"
+
 static int	ft_count_words(char const *s, char c)
 {
 	int	i;
@@ -78,7 +79,7 @@ static char	**ft_fill_words(char const *s, char c, int count_words,
 	return (output);
 }
 
-char	**ft_split(char  *s, char c)
+char	**ft_split(char *s, char c)
 {
 	char	**output;
 

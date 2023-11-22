@@ -6,16 +6,16 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 17:07:56 by khbouych          #+#    #+#             */
-/*   Updated: 2023/10/21 17:19:10 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/22 22:59:41 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/cub.h"
+#include "../../headers/cub.h"
 
 void	*ft_memset(void *s, int c, unsigned int len)
 {
 	unsigned char	*string;
-	unsigned int			i;
+	unsigned int	i;
 
 	string = (unsigned char *)s;
 	i = 0;
@@ -29,7 +29,7 @@ void	*ft_memset(void *s, int c, unsigned int len)
 
 void	*ft_calloc(unsigned int count, unsigned int size)
 {
-	char	*tmp;
+	char			*tmp;
 	unsigned int	tsize;
 
 	tsize = count * size;
@@ -42,9 +42,9 @@ void	*ft_calloc(unsigned int count, unsigned int size)
 	return (tmp);
 }
 
-char	*ft_substr(char  *s, unsigned int start, unsigned len)
+char	*ft_substr(char *s, unsigned int start, unsigned int len)
 {
-	char	*res;
+	char			*res;
 	unsigned int	i;
 
 	i = 0;
@@ -64,9 +64,9 @@ char	*ft_substr(char  *s, unsigned int start, unsigned len)
 	return (res);
 }
 
-char	*ft_strtrim(char  *s1, char  *set)
+char	*ft_strtrim(char *s1, char *set)
 {
-	unsigned	i;
+	unsigned int	i;
 
 	if (s1 == NULL || set == NULL)
 		return (NULL);

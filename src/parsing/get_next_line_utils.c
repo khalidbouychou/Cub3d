@@ -6,24 +6,11 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/05 13:56:12 by khbouych          #+#    #+#             */
-/*   Updated: 2023/10/23 14:52:04 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/21 20:14:29 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/cub.h"
-
-int	ft_strncmp(const char *str1, const char *str2, unsigned int n)
-{
-	while (*str1 && *str1 == *str2 && n)
-	{
-		str1++;
-		str2++;
-		n--;
-	}
-	if (n == 0)
-		return (0);
-	return ((unsigned char)*str1 - (unsigned char)*str2);
-}
+#include "/Users/khbouych/Desktop/Cub3d/headers/get_next_line.h"
 
 int	ft_strlen(char *str)
 {
@@ -37,7 +24,7 @@ int	ft_strlen(char *str)
 
 char	*ft_strchr(char *src, int c)
 {
-	unsigned int	i;
+	size_t	i;
 
 	i = 0;
 	if (src == NULL)
@@ -55,8 +42,8 @@ char	*ft_strchr(char *src, int c)
 
 char	*ft_strjoin(char *s1, char *s2)
 {
-	unsigned int	i;
-	unsigned int	j;
+	size_t	i;
+	size_t	j;
 	char	*str;
 
 	i = 0;
@@ -75,5 +62,6 @@ char	*ft_strjoin(char *s1, char *s2)
 	while (s2[j] != '\0')
 		str[i++] = s2[j++];
 	str[i] = '\0';
+	free(s1);
 	return (str);
 }

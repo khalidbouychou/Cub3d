@@ -1,31 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/05 13:55:19 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/21 20:17:49 by khbouych         ###   ########.fr       */
+/*   Created: 2023/11/21 20:20:15 by khbouych          #+#    #+#             */
+/*   Updated: 2023/11/22 22:59:24 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "../../headers/cub.h"
 
-# include <fcntl.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <unistd.h>
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	size_t	i;
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1
-# endif
-
-int		ft_strlen(char *str);
-char	*ft_strjoin(char *s1, char *s2);
-char	*ft_strchr(char *s, int c);
-char	*get_next_line(int fd);
-
-#endif
+	i = 0;
+	if (!s1 && !s2)
+		return (0);
+	while ((s1[i] || s2[i]) && i < n)
+	{
+		if (s1[i] != s2[i])
+			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+		i++;
+	}
+	return (0);
+}

@@ -6,54 +6,53 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 20:07:15 by khbouych          #+#    #+#             */
-/*   Updated: 2023/10/29 18:27:12 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/22 22:59:32 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/cub.h"
+#include "../../headers/cub.h"
 
-char    *removeSpaces(char* str)
+char	*removespaces(char *str)
 {
-    char* src;
-    char* dst;
+	char	*src;
+	char	*dst;
 
-    src = str;
-    dst = str;
-
-    while (*src)
-    {
-        if (*src != '\t' && *src != '\r')
-        {
-            *dst = *src;
-            dst++;
-        }
-        src++;
-    }
-    *dst = '\0';
-    return str;
+	src = str;
+	dst = str;
+	while (*src)
+	{
+		if (*src != '\t' && *src != '\r')
+		{
+			*dst = *src;
+			dst++;
+		}
+		src++;
+	}
+	*dst = '\0';
+	return (str);
 }
 
-int check_duplicat(t_map *m)
+int	check_duplicat(t_map *m)
 {
-    int i;
-    int j;
+	int	i;
+	int	j;
 
-    i = 0;
-    while (m->ture2d[i])
-    {
-        j = i + 1;
-        while (m->ture2d[j])
-        {
-            if (!ft_strncmp(m->ture2d[i], m->ture2d[j], 2))
-            {
-                write(1, "Error\nDuplicate map element [texture/color]\n", 45);
-                return (0);
-            }
-            j++;
-        }
-        i++;
-    }
-    return (1);
+	i = 0;
+	while (m->ture2d[i])
+	{
+		j = i + 1;
+		while (m->ture2d[j])
+		{
+			if (!ft_strncmp(m->ture2d[i], m->ture2d[j], 2))
+			{
+				write(1, "Error\nDuplicate map element [texture/color]\n", 45);
+				return (0);
+			}
+			j++;
+		}
+		i++;
+	}
+	return (1);
 }
 
 static void	ft_skipp(int *i, const char *p_str, int *sign)
@@ -94,4 +93,18 @@ int	ft_atoi(const char *str)
 		i++;
 	}
 	return (sign * res);
+}
+
+char	*ft_strrchr(char *str, int c)
+{
+	int	i;
+
+	i = ft_strlen(str);
+	while (i >= 0)
+	{
+		if (str[i] == (char)c)
+			return ((char *)&str[i]);
+		i--;
+	}
+	return (0);
 }

@@ -6,43 +6,33 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 19:56:14 by khbouych          #+#    #+#             */
-/*   Updated: 2023/10/25 19:56:45 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/22 20:28:43 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/cub.h"
 
-void free_2dmap(t_map *m)
+unsigned int	cnv_rgb(int r, int g, int b, int a)
 {
-    int i;
-
-    i = 0;
-    while (m->map2d[i])
-        free(m->map2d[i++]);
-    free(m->map2d);
+	return (r << 24 | g << 16 | b << 8 | a);
 }
 
-void free_ture2d(t_map *m)
+char	**get_f_c_color(t_txtr *txtr)
 {
-    int i;
+	char	*color;
+	char	**rgb;
 
-    i = 0;
-    while (m->ture2d[i])
-        free(m->ture2d[i++]);
-    free(m->ture2d);
-}
-
-void free_list(t_txtr *l_ture)
-{
-    t_txtr *tmp;
-
-    while (l_ture)
-    {
-        tmp = l_ture;
-        l_ture = l_ture->next;
-        free(tmp->key);
-        free(tmp->value);
-        free(tmp);
-    }
-    free(tmp);
+	color = NULL;
+	while (txtr)
+	{
+		if (!ft_strncmp(txtr->key, "F", 2) || !ft_strncmp(txtr->key, "C", 2))
+		{
+			color = ft_strjoin(color, txtr->value);
+			color = ft_strjoin(color, ",");
+		}
+		txtr = txtr->next;
+	}
+	rgb = ft_split(color, ',');
+	free(color);
+	return (rgb);
 }

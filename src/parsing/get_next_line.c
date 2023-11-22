@@ -6,11 +6,11 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/05 13:53:19 by khbouych          #+#    #+#             */
-/*   Updated: 2023/10/21 17:17:49 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/21 20:14:49 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/cub.h"
+#include "/Users/khbouych/Desktop/Cub3d/headers/get_next_line.h"
 
 static char	*ft_save_rest_of_line(char *save)
 {
@@ -40,7 +40,7 @@ static char	*ft_save_rest_of_line(char *save)
 
 static char	*ft_read_line_from_stash(char *stash)
 {
-	unsigned int	i;
+	size_t	i;
 	char	*line;
 
 	if (stash == NULL)

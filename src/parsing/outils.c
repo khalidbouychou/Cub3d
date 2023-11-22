@@ -6,16 +6,16 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 17:38:41 by khbouych          #+#    #+#             */
-/*   Updated: 2023/10/29 18:46:40 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/22 22:59:45 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/cub.h"
+#include "../../headers/cub.h"
 
 void	*ft_memcpy(void *dest, const void *src, unsigned int n)
 {
-	char	*p_dest;
-	char	*p_src;
+	char			*p_dest;
+	char			*p_src;
 	unsigned int	i;
 
 	if (dest == NULL && src == NULL)
@@ -30,7 +30,7 @@ void	*ft_memcpy(void *dest, const void *src, unsigned int n)
 
 char	*ft_strdup(char *s1)
 {
-	char	*tmp;
+	char			*tmp;
 	unsigned int	size;
 
 	size = ft_strlen(s1);
@@ -42,38 +42,42 @@ char	*ft_strdup(char *s1)
 	return (tmp);
 }
 
-int ft_isdigit(int c)
+int	ft_isdigit(int c)
 {
 	return (c >= '0' && c <= '9');
 }
 
-void _rgb(char *rgb)
+void	ft_process_rgb_color(t_txtr *tmp)
 {
-    char **rgb2d;
-    int i;
+	int		i;
+	char	**rgb2d;
 
-    i = 0;
-    rgb2d = ft_split(rgb, ',');
-    while (rgb2d[i])
-    {
-        if (ft_atoi(rgb2d[i]) < 0 || ft_atoi(rgb2d[i]) > 255)
-        {
-            write (1, "Error\ninvalid rgb color\n", 25);
-            exit(0);
-        }
-        i++;
-    }
-}
-void parse_rgb_color(t_txtr *ture)
-{
-    t_txtr *tmp;
-
-    tmp = ture;
-    while (tmp)
-    {
-        if (!ft_strncmp(tmp->key, "F", 1) || !ft_strncmp(tmp->key, "C", 1))
-            _rgb(tmp->value);
-        tmp = tmp->next;
-    }
+	i = 0;
+	rgb2d = ft_split(tmp->value, ',');
+	if (!rgb2d)
+		return ;
+	while (rgb2d[i])
+	{
+		if (ft_atoi(rgb2d[i]) < 0 || ft_atoi(rgb2d[i]) > 255)
+		{
+			write(1, "Error\ninvalid rgb color\n", 25);
+			free_2d(rgb2d);
+			exit(0);
+		}
+		i++;
+	}
+	free_2d(rgb2d);
 }
 
+void	parse_rgb_color(t_txtr *ture)
+{
+	t_txtr	*tmp;
+
+	tmp = ture;
+	while (tmp)
+	{
+		if (!ft_strncmp(tmp->key, "F", 1) || !ft_strncmp(tmp->key, "C", 1))
+			ft_process_rgb_color(tmp);
+		tmp = tmp->next;
+	}
+}

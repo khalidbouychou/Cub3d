@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 11:07:17 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/19 22:53:39 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/22 16:27:08 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,14 +153,24 @@ void init_vars(t_mlx *smlx)
     smlx->m->walkdirection = 0;
     smlx->m->rotationangle = M_PI / 2;
     smlx->m->rotatespeed = 3 * (M_PI / 180);
-    smlx->m->movespeed = 1.5;
+    smlx->m->movespeed = 2.0;
     smlx->w_window = smlx->m->w_map * P_SIZE;
     smlx->h_window = smlx->m->h_map * P_SIZE;
     smlx->nbr_rays = WINDOW_W;
     smlx->m->rays = malloc(sizeof(t_ray) * smlx->nbr_rays);
     smlx->texture = mlx_load_png(smlx->l_ture->value);
+    smlx->m->rgb = get_f_c_color(smlx->l_ture);
+    smlx->floor_color = rgbcolor(ft_atoi(smlx->m->rgb[0]), ft_atoi(smlx->m->rgb[1]), ft_atoi(smlx->m->rgb[2]), 255);
+    smlx->ceiling_color = rgbcolor(ft_atoi(smlx->m->rgb[3]), ft_atoi(smlx->m->rgb[4]), ft_atoi(smlx->m->rgb[5]), 255);
 }
 
+void fabs_(int *step, float dx, float dy)
+{
+    if (f_abs(dx) > f_abs(dy))
+        *step = f_abs(dx);
+    else
+        *step = f_abs(dy);
+}
 void draw_line(t_mlx *smlx, float X1, float Y1)
 {
     int steps = 0;
@@ -171,10 +181,7 @@ void draw_line(t_mlx *smlx, float X1, float Y1)
     i = 0;
     smlx->delta_x = X1 - smlx->xplayer;
     smlx->delta_y = Y1 - smlx->yplayer;
-    if (f_abs(smlx->delta_x) > f_abs(smlx->delta_y))
-        steps = f_abs(smlx->delta_x);
-    else
-        steps = f_abs(smlx->delta_y);
+    fabs_(&steps, smlx->delta_x, smlx->delta_y);
     Xincrement = smlx->delta_x / (float)steps;
     Yincrement = smlx->delta_y / (float)steps;
     smlx->newXplayer = smlx->xplayer;
@@ -182,7 +189,8 @@ void draw_line(t_mlx *smlx, float X1, float Y1)
 
     while (i < steps)
     {
-        if (smlx->newXplayer > 0 && smlx->newXplayer < smlx->w_window && smlx->newYplayer > 0 && smlx->newYplayer < smlx->h_window)
+        if (smlx->newXplayer > 0 && smlx->newXplayer < smlx->w_window
+            && smlx->newYplayer > 0 && smlx->newYplayer < smlx->h_window)
             mlx_put_pixel(smlx->img, smlx->newXplayer, smlx->newYplayer, 0x960058FF); // put pixel at (X,Y)
         smlx->newXplayer += Xincrement;
         smlx->newYplayer += Yincrement;
@@ -190,7 +198,7 @@ void draw_line(t_mlx *smlx, float X1, float Y1)
     }
 }
 
-uint32_t rgbcolor(int r, int g, int b , int a)
+uint32_t rgbcolor(int r, int g, int b, int a)
 {
-    return (r << 24 | g << 16 | b << 8 | a);
+    return (r << 24 | g << 16 | b << 8 |a);
 }

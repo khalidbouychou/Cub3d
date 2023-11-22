@@ -6,12 +6,12 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 14:00:46 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/18 21:07:22 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/22 23:14:33 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #ifndef CUB_H
-// # define CUB_H
+#ifndef CUB_H
+# define CUB_H
 
 #include <math.h>
 #include <stdlib.h>
@@ -56,6 +56,7 @@ typedef struct s_map
     float   rotationangle;
     float   movespeed;
     float   rotatespeed;//walkspeed
+    char    **rgb;
     t_ray   *rays;
 }              t_map;
 
@@ -90,8 +91,8 @@ typedef struct s_mlx
     int         h_window;
     int         nbr_rays;
     mlx_texture_t *texture;
-    unsigned int floor_color;
-    unsigned int ceiling_color;
+    uint32_t floor_color;
+    uint32_t ceiling_color;
 }              t_mlx;
 
 
@@ -105,19 +106,20 @@ int	    ft_atoi(const char *str);
 //----------parse textures----------------
 int     checktures_space_tab(char **ture2d, int count);
 int     parse_rgb(char **ture2d);
-void    lst_ture(t_map *m, t_txtr **l_ture);
+int    lst_ture(t_map *m, t_txtr **l_ture);
 void    parse_rgb_color(t_txtr *ture);
 //----------parse map----------------
-void    read_map(char *av ,t_map *m , int *count);
+// void    read_map(char *av ,t_map *m , int *count);
+int read_map(char *av ,t_map *m , int *count);
 //----------otils list----------------
 int     check_duplicat(t_map *m);
-void    lst_ture(t_map *m, t_txtr **l_ture);
 //-----------free----------------
-void    free_2dmap(t_map *m);
-void    free_ture2d(t_map *m);
-void    free_list(t_txtr *l_ture);
+// void    free_2dmap(char **m);
+// void    free_ture2d(t_map *m);
+// void    free_list(t_txtr *l_ture);
 int     check_ifvalid(char *line);
-char    *removeSpaces(char* str);
+char    *removespaces(char* str);
+int	ft_strncmp(const char *s1, const char *s2, size_t n);
 //-----------mlx----------------
 void    draw(t_mlx *smlx, t_map *m , t_txtr *l_ture);
 void    key(mlx_key_data_t keydata , void *param);
@@ -132,7 +134,8 @@ char    *fixline(char *line, int maxlen);
 int     h_map(char **map);
 int     v_map(char **map);
 void    get_x_y_player(t_mlx *smlx , t_map *m);
-void    valid_map(t_map *m);
+// void    valid_map(t_map *m);
+int    valid_map(t_map *m);
 //-----------player----------------
 void    castAllRay(t_mlx *smlx);
 void    move_player(void *param);
@@ -143,5 +146,18 @@ int check_next_step(t_mlx *smlx, float x, float y);
 int check_next_step_2(t_mlx *smlx, float x, float y);
 void splitwindow(t_mlx *smlx);
 float f_abs(float number);
+char **get_f_c_color(t_txtr *txtr);
+uint32_t rgbcolor(int r, int g, int b , int a);
+char	*ft_strrchr(char *str, int c);
 //-----------------raycasting----------------
-// #endif
+
+void free_2d(char **m);
+int	checkextension(char *fname);
+void	free1(t_map *m, t_txtr *l_ture);
+int	check_first_last_line(char **map);
+int	suroundedbyone(char **map);
+int	check_color_textures(char *line);
+int	check_countture(t_map *m, int count);
+int	check_l_surroundedbyone(char *line);
+void	freeme(char *ture, char *line, int fd);
+#endif
