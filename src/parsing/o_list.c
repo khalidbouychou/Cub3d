@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 20:07:15 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/22 22:59:32 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/24 17:38:55 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*removespaces(char *str)
 	return (str);
 }
 
-int	check_duplicat(t_map *m)
+int	check_duplicat(t_data *m)
 {
 	int	i;
 	int	j;

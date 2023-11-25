@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 20:20:15 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/22 22:59:24 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/23 16:16:31 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,18 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 		i++;
 	}
 	return (0);
+}
+
+void	freelist(t_txtr **head)
+{
+	t_txtr	*tmp;
+
+	tmp = *head;
+	while (tmp)
+	{
+		free(tmp->key);
+		free(tmp->value);
+		tmp = tmp->next;
+	}
+	free(head);
 }

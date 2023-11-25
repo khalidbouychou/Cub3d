@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 20:59:11 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/22 22:59:55 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/24 17:38:55 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	check_first_last_line(char **map)
 	return (1);
 }
 
-int	check_countture(t_map *m, int count)
+int	check_countture(t_data *m, int count)
 {
 	if (count < 6 || count > 6)
 	{

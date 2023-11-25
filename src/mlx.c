@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:38:38 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/21 13:42:55 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/24 17:44:44 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void draw_square(mlx_image_t *img, t_mlx **smlx, int color)
     {
         tmp->y = -1;
         while (++tmp->y < P_SIZE)
-            mlx_put_pixel(img, ((tmp->j * P_SIZE) + tmp->x) * 0.4, ((tmp->i * P_SIZE)  + tmp->y)*0.4, color);
+            mlx_put_pixel(img, ((tmp->j * P_SIZE) + tmp->x) * 0.4, ((tmp->i * P_SIZE) + tmp->y) * 0.4, color);
     }
 }
 
@@ -31,7 +31,7 @@ void draw2d(t_mlx *smlx)
 {
     smlx->i = 0;
     smlx->color = 0;
-    smlx->img = mlx_new_image(smlx->mlx,WINDOW_W,WINDOW_H);
+    smlx->img = mlx_new_image(smlx->mlx, WINDOW_W, WINDOW_H);
     if (!smlx->img)
     {
         printf("error\n");
@@ -47,14 +47,14 @@ void draw_player(t_mlx *smlx)
     {
         smlx->j = -1;
         while (++smlx->j < H_PLAYER)
-            mlx_put_pixel(smlx->img, (smlx->xplayer  + smlx->i)*0.4, (smlx->yplayer  + smlx->j)*0.4, 0xffdd00FF);
+            mlx_put_pixel(smlx->img, (smlx->m->p_x + smlx->i) * 0.4, (smlx->m->p_y + smlx->j) * 0.4, 0xffdd00FF);
     }
 }
-void draw(t_mlx *smlx, t_map *m, t_txtr *l_ture)
+void draw(t_mlx *smlx, t_data *m, t_txtr *l_ture)
 {
     (void)l_ture;
     (void)m;
-    smlx->mlx = mlx_init(WINDOW_W,WINDOW_H, "CUB3D", false);
+    smlx->mlx = mlx_init(WINDOW_W, WINDOW_H, "CUB3D", false);
     if (!smlx->mlx)
     {
         printf("%s", mlx_strerror(mlx_errno));
@@ -67,7 +67,7 @@ void draw(t_mlx *smlx, t_map *m, t_txtr *l_ture)
 void key(mlx_key_data_t keydata, void *param)
 {
 
-    t_map *m;
+    t_data *m;
     m = param;
     if (keydata.key == MLX_KEY_ESCAPE && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
         exit(0);

@@ -6,13 +6,13 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 20:16:33 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/22 23:01:56 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/24 17:44:44 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/cub.h"
 
-int	valid_map(t_map *m)
+int	valid_map(t_data *m)
 {
 	int	i;
 	int	maxlen;
@@ -39,7 +39,7 @@ int	valid_map(t_map *m)
 	return (1);
 }
 
-void	get_x_y_player(t_mlx *smlx, t_map *m)
+void	get_x_y_player(t_mlx *smlx, t_data *m)
 {
 	int	i;
 	int	j;
@@ -53,8 +53,8 @@ void	get_x_y_player(t_mlx *smlx, t_map *m)
 			if (m->sq_map[i][j] == 'N' || m->sq_map[i][j] == 'S'
 				|| m->sq_map[i][j] == 'W' || m->sq_map[i][j] == 'E')
 			{
-				smlx->xplayer = j * P_SIZE;
-				smlx->yplayer = i * P_SIZE;
+				smlx->m->p_x = j * P_SIZE;
+				smlx->m->p_y = i * P_SIZE;
 				return ;
 			}
 			j++;
@@ -73,7 +73,7 @@ void	free_2d(char **m)
 	free(m);
 }
 
-void	free1(t_map *m, t_txtr *l_ture)
+void	free1(t_data *m, t_txtr *l_ture)
 {
 	free_2d(m->sq_map);
 	free_2d(m->map2d);

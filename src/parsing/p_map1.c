@@ -6,13 +6,13 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 20:43:09 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/22 23:17:58 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/24 17:38:55 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/cub.h"
 
-char	*getmap(t_map *m)
+char	*getmap(t_data *m)
 {
 	m->map = ft_strdup("");
 	while (m->line)
@@ -29,7 +29,7 @@ char	*getmap(t_map *m)
 	return (m->map);
 }
 
-int	read_map_(t_map *m, int count)
+int	read_map_(t_data *m, int count)
 {
 	m->map = getmap(m);
 	if (!m->map)
@@ -61,7 +61,7 @@ void	freeme(char *ture, char *line, int fd)
 		close (fd);
 }
 
-int	read_map(char *av, t_map *m, int *count)
+int	read_map(char *av, t_data *m, int *count)
 {
 	m->fd = open(av, O_RDONLY);
 	if (m->fd == -1)

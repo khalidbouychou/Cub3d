@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 19:53:18 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/22 23:00:03 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/24 19:32:10 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,13 @@ t_txtr	*lst_back_ture(t_txtr *l_ture, t_txtr *new)
 	tmp = l_ture;
 	if (l_ture == NULL)
 		return (new);
-	while (tmp->next)
+	while (tmp)
 		tmp = tmp->next;
 	tmp->next = new;
 	return (l_ture);
 }
 
-int	lst_ture(t_map *m, t_txtr **l_ture)
+int	lst_ture(t_data *m, t_txtr **l_ture)
 {
 	int		i;
 	t_txtr	*tmp;

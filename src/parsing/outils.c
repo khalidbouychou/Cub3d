@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 17:38:41 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/22 22:59:45 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/24 19:41:52 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,37 +47,40 @@ int	ft_isdigit(int c)
 	return (c >= '0' && c <= '9');
 }
 
-void	ft_process_rgb_color(t_txtr *tmp)
+int 	ft_process_rgb_color(t_txtr *tmp)
 {
 	int		i;
 	char	**rgb2d;
 
 	i = 0;
+	rgb2d = NULL;
+if (!ft_strncmp(tmp->key, "F", 1) || !ft_strncmp(tmp->key, "C", 1))
+{
 	rgb2d = ft_split(tmp->value, ',');
 	if (!rgb2d)
-		return ;
+		return (0);
 	while (rgb2d[i])
 	{
 		if (ft_atoi(rgb2d[i]) < 0 || ft_atoi(rgb2d[i]) > 255)
 		{
 			write(1, "Error\ninvalid rgb color\n", 25);
-			free_2d(rgb2d);
-			exit(0);
+			return (free_2d(rgb2d),0);
 		}
 		i++;
 	}
-	free_2d(rgb2d);
+}
+	return (free_2d(rgb2d), 1);
 }
 
-void	parse_rgb_color(t_txtr *ture)
+int	parse_rgb_color(t_mlx *smlx)
 {
 	t_txtr	*tmp;
 
-	tmp = ture;
+	tmp = smlx->l_ture;
 	while (tmp)
 	{
-		if (!ft_strncmp(tmp->key, "F", 1) || !ft_strncmp(tmp->key, "C", 1))
-			ft_process_rgb_color(tmp);
+		printf("%s|%s\n",tmp->key,tmp->value);
 		tmp = tmp->next;
 	}
+	return (1);
 }
