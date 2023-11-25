@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:41:29 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/24 19:42:47 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/25 14:27:32 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ int parsing(int ac, char **av, t_data *m, t_txtr *l_ture)
 		return (free1(m, l_ture), 0);
 	if (!lst_ture(m, &l_ture))
 		return (free1(m, l_ture), 0);
-	if (!parse_rgb_color(&smlx))
-		return (freelist(&l_ture), 0);
+	// if (!parse_rgb_color(&smlx))
+	// 	return (freelist(&l_ture), 0);
 	smlx.m = m;
 	free_2d(m->ture2d);
 	return (1);

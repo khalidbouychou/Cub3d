@@ -6,14 +6,14 @@
 #    By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/14 18:28:45 by khbouych          #+#    #+#              #
-#    Updated: 2023/11/24 19:29:56 by khbouych         ###   ########.fr        #
+#    Updated: 2023/11/25 14:28:16 by khbouych         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3D
 
 HEADERS = headers/cub.h headers/get_next_line.h
-FLAGS = gcc  -Wall -Wextra -Werror -g -fsanitize=address
+FLAGS = gcc  -Wall -Wextra -Werror #-g -fsanitize=address
 
 FLAG_MLX = -framework Cocoa -framework OpenGL -framework IOKit -lglfw
 
@@ -21,7 +21,7 @@ INCLUDE = -I/Users/${USER}/.brew/Cellar/glfw/3.3.8/include/GLFW
 LIB = -L/Users/${USER}/.brew/Cellar/glfw/3.3.8/lib
 MLX = MLX42/build/libmlx42.a
 
-git_msg = update_cube3d
+git_msg = still parsing color
 
 PSRC=src/parsing/ft_split.c src/parsing/ft_strncmp.c src/parsing/o_list.c src/parsing/o_map.c\
 src/parsing/outils_.c src/parsing/outils.c src/parsing/p_map.c src/parsing/p_textures1.c\

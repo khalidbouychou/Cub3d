@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 19:53:18 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/24 19:32:10 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/25 14:27:29 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ t_txtr	*new_texture(char *line)
 	t_txtr	*list;
 
 	list = (t_txtr *)malloc(sizeof(t_txtr));
+	if (!list)
+		return (NULL);
 	while (*line == ' ' || (*line >= 9 && *line <= 13))
 		line++;
 	if ((!ft_strncmp(line, "NO", 2) || !ft_strncmp(line, "SO", 2)
@@ -48,7 +50,7 @@ t_txtr	*lst_back_ture(t_txtr *l_ture, t_txtr *new)
 	tmp = l_ture;
 	if (l_ture == NULL)
 		return (new);
-	while (tmp)
+	while (tmp->next)
 		tmp = tmp->next;
 	tmp->next = new;
 	return (l_ture);
@@ -60,6 +62,7 @@ int	lst_ture(t_data *m, t_txtr **l_ture)
 	t_txtr	*tmp;
 
 	i = 0;
+
 	*l_ture = NULL;
 	while (m->ture2d[i])
 	{
@@ -67,7 +70,6 @@ int	lst_ture(t_data *m, t_txtr **l_ture)
 		if (!tmp)
 			return (0);
 		(*l_ture) = lst_back_ture((*l_ture), tmp);
-		free(tmp);
 	}
 	return (1);
 }
