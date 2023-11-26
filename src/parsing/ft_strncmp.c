@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 20:20:15 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/23 16:16:31 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/25 22:41:34 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,11 @@ void	freelist(t_txtr **head)
 	tmp = *head;
 	while (tmp)
 	{
+		*head = tmp->next;
 		free(tmp->key);
 		free(tmp->value);
-		tmp = tmp->next;
+		free(tmp);
+		tmp = *head;
 	}
-	free(head);
+	free(*head);
 }

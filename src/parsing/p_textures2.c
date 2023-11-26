@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 19:53:18 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/25 14:27:29 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/26 00:54:47 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ int	lst_ture(t_data *m, t_txtr **l_ture)
 	t_txtr	*tmp;
 
 	i = 0;
-
 	*l_ture = NULL;
 	while (m->ture2d[i])
 	{
