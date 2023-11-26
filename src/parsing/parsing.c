@@ -6,24 +6,24 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/26 00:41:00 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/26 16:54:00 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/26 16:59:47 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/cub.h"
 
-void	free_m(char **sqmap, char **map2d, char **ture2d, char **ff, char **cc)
+void	free_m(t_data *m)
 {
-	if (sqmap)
-		free_2d(sqmap);
-	if (map2d)
-		free_2d(map2d);
-	if (ture2d)
-		free_2d(ture2d);
-	if (ff)
-		free_2d(ff);
-	if (cc)
-		free_2d(cc);
+	if (m->map2d)
+		free_2d(m->map2d);
+	if (m->sq_map)
+		free_2d(m->sq_map);
+	if (m->ture2d)
+		free_2d(m->ture2d);
+	if (m->ff)
+		free_2d(m->ff);
+	if (m->cc)
+		free_2d(m->cc);
 }
 
 int	color_ture(t_data *m, t_txtr *l_ture)
@@ -65,9 +65,9 @@ int	parsing(int ac, char **av, t_data *m, t_txtr *l_ture)
 	if (!lst_ture(m, &l_ture))
 		return (free(l_ture), 0);
 	if (!color_ture(m, l_ture))
-		return (free_m(m->sq_map, m->map2d, m->ture2d, NULL, NULL),
+		return (free_2d(m->sq_map),free_2d(m->map2d), free_2d(m->ture2d),
 			freelist(&l_ture), free(smlx), 0);
-	free_m(m->sq_map, m->map2d, m->ture2d, m->ff, m->cc);
+	free_m(m);
 	freelist(&l_ture);
 	free(smlx);
 	return (1);
