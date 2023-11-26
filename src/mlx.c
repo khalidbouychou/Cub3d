@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:38:38 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/24 17:44:44 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/26 13:12:49 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ void draw2d(t_mlx *smlx)
     if (!smlx->img)
     {
         printf("error\n");
-        exit(0);
+        // exit(0);
+        return;
     }
     mlx_image_to_window(smlx->mlx, smlx->img, 0, 0);
 }

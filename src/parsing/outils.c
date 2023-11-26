@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 17:38:41 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/26 00:54:38 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/26 16:47:51 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,16 @@ int	ft_process_rgb_color(t_txtr *tmp, t_data *m)
 	if (!checkcolorvalues(rgb))
 		return (free_2d(rgb), 0);
 	if (!ft_strncmp(tmp->key, "F", 2))
+	{
 		m->ff = ft_split(tmp->value, ',');
+		if (!m->ff)
+			return (free_2d(m->ff), 0);
+	}
 	else if (!ft_strncmp(tmp->key, "C", 2))
+	{
 		m->cc = ft_split(tmp->value, ',');
-	free_2d(rgb);
-	return (1);
+		if (!m->cc)
+			return (free_2d(m->cc), 0);
+	}
+	return (free_2d(rgb), 1);
 }

@@ -6,45 +6,24 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/26 00:41:00 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/26 00:50:22 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/26 16:54:00 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/cub.h"
 
-void	free_m(t_data *m)
+void	free_m(char **sqmap, char **map2d, char **ture2d, char **ff, char **cc)
 {
-	free_2d(m->ff);
-	free_2d(m->cc);
-	free_2d(m->ture2d);
-	free_2d(m->sq_map);
-}
-
-int	parsing(int ac, char **av, t_data *m, t_txtr *l_ture)
-{
-	t_mlx	*smlx;
-	int		count;
-
-	smlx = malloc(sizeof(t_mlx));
-	l_ture = malloc(sizeof(t_txtr));
-	if (ac != 2 || !checkextension(av[1]))
-		return (free(smlx), free(l_ture),
-			write(1, "Error\ninvalid args\n", 20), 0);
-	count = 0;
-	if (!read_map(av[1], m, &count))
-		return (free(smlx), free(l_ture), 0);
-	if (!valid_map(m) || !l_ture)
-		return (free_2d(m->sq_map), free_2d(m->map2d),
-			free_2d(m->ture2d), free(l_ture), free(smlx), 0);
-	if (!lst_ture(m, &l_ture))
-		return (0);
-	if (!color_ture(m, l_ture))
-		return (free_2d(m->sq_map), free_2d(m->ture2d),
-			freelist(&l_ture), free(l_ture), free(smlx), 0);
-	free_m(m);
-	freelist(&l_ture);
-	free(smlx);
-	return (1);
+	if (sqmap)
+		free_2d(sqmap);
+	if (map2d)
+		free_2d(map2d);
+	if (ture2d)
+		free_2d(ture2d);
+	if (ff)
+		free_2d(ff);
+	if (cc)
+		free_2d(cc);
 }
 
 int	color_ture(t_data *m, t_txtr *l_ture)
@@ -64,5 +43,32 @@ int	color_ture(t_data *m, t_txtr *l_ture)
 		}
 		tmp = tmp->next;
 	}
+	return (1);
+}
+
+int	parsing(int ac, char **av, t_data *m, t_txtr *l_ture)
+{
+	t_mlx	*smlx;
+	int		count;
+
+	smlx = malloc(sizeof(t_mlx));
+	l_ture = NULL;
+	if (ac != 2 || !checkextension(av[1]))
+		return (free(smlx), free(l_ture),
+			write(1, "Error\ninvalid args\n", 20), 0);
+	count = 0;
+	if (!read_map(av[1], m, &count))
+		return (free(smlx), free(l_ture), 0);
+	if (!valid_map(m))
+		return (free_2d(m->sq_map), free_2d(m->map2d),
+			free_2d(m->ture2d), free(l_ture), free(smlx), 0);
+	if (!lst_ture(m, &l_ture))
+		return (free(l_ture), 0);
+	if (!color_ture(m, l_ture))
+		return (free_m(m->sq_map, m->map2d, m->ture2d, NULL, NULL),
+			freelist(&l_ture), free(smlx), 0);
+	free_m(m->sq_map, m->map2d, m->ture2d, m->ff, m->cc);
+	freelist(&l_ture);
+	free(smlx);
 	return (1);
 }

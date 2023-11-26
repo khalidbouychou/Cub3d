@@ -6,7 +6,7 @@
 #    By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/14 18:28:45 by khbouych          #+#    #+#              #
-#    Updated: 2023/11/25 21:56:33 by khbouych         ###   ########.fr        #
+#    Updated: 2023/11/26 13:08:04 by khbouych         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,10 +26,7 @@ git_msg = still parsing color
 PSRC=src/parsing/ft_split.c src/parsing/ft_strncmp.c src/parsing/o_list.c src/parsing/o_map.c\
 src/parsing/outils_.c src/parsing/outils.c src/parsing/p_map.c src/parsing/p_textures1.c\
 src/parsing/p_textures2.c src/parsing/par1.c  src/main.c src/mlx.c src/o_color.c src/o_map1.c src/raycasting.c\
-src/parsing/get_next_line_utils.c \
-src/parsing/get_next_line.c \
-src/parsing/p_map1.c \
-src/parsing/p_map2.c \
+src/parsing/get_next_line_utils.c src/parsing/get_next_line.c src/parsing/p_map1.c src/parsing/p_map2.c  src/parsing/parsing.c\
 
 POBJ= $(PSRC:.c=.o)
 

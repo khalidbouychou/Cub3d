@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 20:16:33 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/26 00:55:02 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/26 13:09:34 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int	valid_map(t_data *m)
 	m->w_map = ft_strlen(m->sq_map[0]);
 	if (!h_map(m->sq_map) || !v_map(m->sq_map))
 		return (0);
-	free_2d(m->map2d);
 	return (1);
 }
 

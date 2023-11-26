@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 19:53:18 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/26 00:54:47 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/26 13:08:38 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,20 +55,34 @@ t_txtr	*lst_back_ture(t_txtr *l_ture, t_txtr *new)
 	tmp->next = new;
 	return (l_ture);
 }
+void	lst_back_ture2(t_txtr **l_ture, t_txtr *new)
+{
+	t_txtr	*tmp;
+
+	tmp = *l_ture;
+	if (*l_ture == NULL)
+	{
+		(*l_ture) = new;
+		return ;
+	}
+	while (tmp->next)
+		tmp = tmp->next;
+	tmp->next = new;
+	// return (l_ture);
+}
 
 int	lst_ture(t_data *m, t_txtr **l_ture)
 {
 	int		i;
 	t_txtr	*tmp;
-
 	i = 0;
-	*l_ture = NULL;
 	while (m->ture2d[i])
 	{
 		tmp = new_texture(m->ture2d[i++]);
 		if (!tmp)
 			return (0);
-		(*l_ture) = lst_back_ture((*l_ture), tmp);
+		// (*l_ture) = lst_back_ture((*l_ture), tmp);
+		lst_back_ture2(l_ture, tmp);
 	}
 	return (1);
 }

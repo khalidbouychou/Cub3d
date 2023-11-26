@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 14:00:46 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/26 01:02:51 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/26 16:52:35 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,29 +155,32 @@ int		read_map(char *av, t_data *m, int *count);
 int		check_first_last_line(char **map);
 int		check_duplicat(t_data *m);
 int		check_color_textures(char *line);
+int	ft_process_rgb_color(t_txtr *tmp, t_data *m);
+void	lst_back_ture2(t_txtr **l_ture, t_txtr *new);
 //-----------free----------------
 void	freelist(t_txtr **head);
-void	free_m(t_data *m);
+// void	free_m(t_data *m);
+void	free_m(char **sqmap, char **map2d, char **ture2d, char **ff, char **cc);
 void	free_2d(char **m);
 void	freeme(char *ture, char *line, int fd);
 void	free1(t_data *m, t_txtr *l_ture);
 //-----------------raycasting----------------
-// void draw(t_mlx *smlx, t_data *m, t_txtr *l_ture);
-// void key(mlx_key_data_t keydata, void *param);
-// void draw2d(t_mlx *smlx);
-// void drawmap(t_mlx *smlx, t_data *m);
-// void draw_square(mlx_image_t *img, t_mlx **smlx, int color);
-// void draw_player(t_mlx *smlx);
-// void get_x_y_player(t_mlx *smlx, t_data *m);
-// char **get_f_c_color(t_txtr *txtr);
-// uint32_t rgbcolor(int r, int g, int b, int a);
-// void castAllRay(t_mlx *smlx);
-// void move_player(void *param);
-// void init_vars(t_mlx *smlx);
-// void draw_line(t_mlx *smlx, float X1, float Y1);
-// int check_next_step(t_mlx *smlx, float x, float y);
-// int check_next_step_2(t_mlx *smlx, float x, float y);
-// void splitwindow(t_mlx *smlx);
-// float f_abs(float number);
+void draw(t_mlx *smlx, t_data *m, t_txtr *l_ture);
+void key(mlx_key_data_t keydata, void *param);
+void draw2d(t_mlx *smlx);
+void drawmap(t_mlx *smlx, t_data *m);
+void draw_square(mlx_image_t *img, t_mlx **smlx, int color);
+void draw_player(t_mlx *smlx);
+void get_x_y_player(t_mlx *smlx, t_data *m);
+char **get_f_c_color(t_txtr *txtr);
+uint32_t rgbcolor(int r, int g, int b, int a);
+void castAllRay(t_mlx *smlx);
+void move_player(void *param);
+void init_vars(t_mlx *smlx);
+void draw_line(t_mlx *smlx, float X1, float Y1);
+int check_next_step(t_mlx *smlx, float x, float y);
+int check_next_step_2(t_mlx *smlx, float x, float y);
+void splitwindow(t_mlx *smlx);
+float f_abs(float number);
 
 #endif
