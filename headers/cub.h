@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 14:00:46 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/26 16:52:35 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/26 17:00:08 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,8 +159,7 @@ int	ft_process_rgb_color(t_txtr *tmp, t_data *m);
 void	lst_back_ture2(t_txtr **l_ture, t_txtr *new);
 //-----------free----------------
 void	freelist(t_txtr **head);
-// void	free_m(t_data *m);
-void	free_m(char **sqmap, char **map2d, char **ture2d, char **ff, char **cc);
+void	free_m(t_data *m);
 void	free_2d(char **m);
 void	freeme(char *ture, char *line, int fd);
 void	free1(t_data *m, t_txtr *l_ture);

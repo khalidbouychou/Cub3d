@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/26 00:41:00 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/26 16:59:47 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/26 18:35:09 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,21 @@ void	free_m(t_data *m)
 int	color_ture(t_data *m, t_txtr *l_ture)
 {
 	t_txtr	*tmp;
-
 	tmp = l_ture;
 	while (tmp)
 	{
-		if (!ft_strncmp(tmp->key, "F", 1) || !ft_strncmp(tmp->key, "C", 1))
-		{
+		// if (!ft_strncmp(tmp->key, "F", 1) || !ft_strncmp(tmp->key, "C", 1))
+		// {
 			if (!ft_process_rgb_color(tmp, m))
 			{
 				write(1, "Error\ninvalid RGBA color\n", 26);
 				return (0);
 			}
-		}
+		// }
 		tmp = tmp->next;
 	}
+			// exit(55);
+	// printf("%s\n",tmp->key);
 	return (1);
 }
 
@@ -67,6 +68,7 @@ int	parsing(int ac, char **av, t_data *m, t_txtr *l_ture)
 	if (!color_ture(m, l_ture))
 		return (free_2d(m->sq_map),free_2d(m->map2d), free_2d(m->ture2d),
 			freelist(&l_ture), free(smlx), 0);
+
 	free_m(m);
 	freelist(&l_ture);
 	free(smlx);

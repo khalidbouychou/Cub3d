@@ -6,7 +6,7 @@
 /*   By: khbouych <khbouych@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 17:38:41 by khbouych          #+#    #+#             */
-/*   Updated: 2023/11/26 16:47:51 by khbouych         ###   ########.fr       */
+/*   Updated: 2023/11/26 18:34:19 by khbouych         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,36 +49,38 @@ int	ft_isdigit(int c)
 
 int	checkcolorvalues(char **rgb)
 {
-	int	i;
-
-	i = 0;
-	while (rgb[i])
+	while (*rgb)
 	{
-		if (ft_atoi(rgb[i]) > 255 || ft_atoi(rgb[i]) < 0)
+		if (ft_atoi(*rgb) > 255 || ft_atoi(*rgb) < 0)
 			return (0);
-		i++;
+		rgb++;
 	}
 	return (1);
 }
 
 int	ft_process_rgb_color(t_txtr *tmp, t_data *m)
 {
-	char	**rgb;
-
-	rgb = ft_split(tmp->value, ',');
-	if (!checkcolorvalues(rgb))
-		return (free_2d(rgb), 0);
 	if (!ft_strncmp(tmp->key, "F", 2))
 	{
 		m->ff = ft_split(tmp->value, ',');
 		if (!m->ff)
 			return (free_2d(m->ff), 0);
+		if (!checkcolorvalues(m->ff))
+		{
+			// free_2d(m->ff);
+			exit(0);
+		}
 	}
 	else if (!ft_strncmp(tmp->key, "C", 2))
 	{
 		m->cc = ft_split(tmp->value, ',');
 		if (!m->cc)
 			return (free_2d(m->cc), 0);
+		if (!checkcolorvalues(m->cc))
+		{
+			// free_2d(m->cc);
+			exit(0);
+		}
 	}
-	return (free_2d(rgb), 1);
+	return (1);
 }
